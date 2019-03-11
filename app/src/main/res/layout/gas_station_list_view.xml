@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        tools:menu="@menu/stations_list_menu">
+
+
+    <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tablayout"
+            android:background="@color/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.tabs.TabItem
+                tools:text="Petrol"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+
+        <com.google.android.material.tabs.TabItem
+                tools:text="Diesel"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+
+        <com.google.android.material.tabs.TabItem
+                tools:text="Gas"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+        <include android:id="@+id/item1" layout="@layout/gas_station_list_item"/>
+        <include android:id="@+id/item2" layout="@layout/gas_station_list_item"/>
+        <include android:id="@+id/item3" layout="@layout/gas_station_list_item"/>
+        <include android:id="@+id/item4" layout="@layout/gas_station_list_item"/>
+        <include android:id="@+id/item5" layout="@layout/gas_station_list_item"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
