@@ -20,13 +20,13 @@ class AddStationFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view : View = inflater.inflate(R.layout.add_gas_station, container, false)
+        val view : View = inflater.inflate(R.layout.add_gas_station_constraint, container, false)
 
-        mTitle = view.findViewById(R.id.et_station_title)
-        mAddress = view.findViewById(R.id.et_station_address)
-        mPetrolPrice = view.findViewById(R.id.et_petrol_price)
-        mDieselPrice = view.findViewById(R.id.et_diesel_price)
-        mGasPrice = view.findViewById(R.id.et_gas_price)
+       // mTitle = view.findViewById(R.id.et_station_title)
+      //  mAddress = view.findViewById(R.id.et_station_address)
+      //  mPetrolPrice = view.findViewById(R.id.et_petrol_price)
+       // mDieselPrice = view.findViewById(R.id.et_diesel_price)
+       // mGasPrice = view.findViewById(R.id.et_gas_price)
 
         return view
     }
