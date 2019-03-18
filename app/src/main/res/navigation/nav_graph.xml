@@ -6,16 +6,17 @@
     <fragment
             android:id="@+id/gasStationListFragment"
             android:name="com.ktu.nearfuel.views.fragments.GasStationListFragment"
-            android:label="gas_station_list_view"
+            android:label="@string/gas_stations"
             tools:layout="@layout/gas_station_list_view"
     />
     <fragment
             android:id="@+id/addStationFragment" android:name="com.ktu.nearfuel.views.fragments.AddStationFragment"
-            android:label="AddStationFragment"
+            android:label="@string/add_station"
             tools:layout="@layout/add_gas_station_constraint"/>
     <fragment
-            android:id="@+id/mapFragment" android:name="com.ktu.nearfuel.views.fragments.MapFragment"
-            android:label="MapFragment"
+            android:id="@+id/mapFragment"
+            android:name="com.ktu.nearfuel.views.fragments.MapFragment"
+            android:label="@string/map"
             tools:layout = "@layout/map_fragment">
 
         <action android:id="@+id/action_mapFragment_to_addStationFragment"

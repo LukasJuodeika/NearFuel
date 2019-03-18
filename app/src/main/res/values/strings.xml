@@ -3,4 +3,7 @@
     <string name="petrol">Petrol</string>
     <string name="diesel">Diesel</string>
     <string name="gas">Gas</string>
+    <string name="gas_stations">Gas stations</string>
+    <string name="map">Map</string>
+    <string name="add_station">Add station</string>
 </resources>
