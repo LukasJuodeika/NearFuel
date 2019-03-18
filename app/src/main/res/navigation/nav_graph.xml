@@ -5,7 +5,7 @@
 
     <fragment
             android:id="@+id/gasStationListFragment"
-            android:name="com.ktu.nearfuel.views.fragments.GasStationListFragment"
+            android:name="com.ktu.nearfuel.views.fragments.StationListFragment"
             android:label="@string/gas_stations"
             tools:layout="@layout/gas_station_list_view"
     />
