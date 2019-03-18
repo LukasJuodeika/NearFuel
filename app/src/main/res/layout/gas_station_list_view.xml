@@ -36,19 +36,13 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <LinearLayout
+    <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical">
-        <include android:id="@+id/item1" layout="@layout/gas_station_list_item"/>
-        <include android:id="@+id/item2" layout="@layout/gas_station_list_item"/>
-        <include android:id="@+id/item3" layout="@layout/gas_station_list_item"/>
-        <include android:id="@+id/item4" layout="@layout/gas_station_list_item"/>
-        <include android:id="@+id/item5" layout="@layout/gas_station_list_item"/>
+            android:id="@+id/viewpager">
 
-
-    </LinearLayout>
+    </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>
 
