@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.gas_station_list_view.view.*
 class StationListFragment : Fragment(), StationListContract.View
 {
     private lateinit var pagerAdapter: ViewPagerAdapter
-    private lateinit var presenter: StationListPresenter
+    private lateinit var presenter: StationListContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +25,7 @@ class StationListFragment : Fragment(), StationListContract.View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.gas_station_list_view,null)
-        presenter = StationListPresenter(this)
         setupViewPager(rootView)
-
-
         return rootView
     }
 
@@ -41,6 +38,7 @@ class StationListFragment : Fragment(), StationListContract.View
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        presenter = StationListPresenter(this)
         presenter.onAttach()
     }
 

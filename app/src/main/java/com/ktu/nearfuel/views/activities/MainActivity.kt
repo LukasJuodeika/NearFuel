@@ -8,17 +8,23 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
+import com.ktu.components.contracts.MainContract
+import com.ktu.components.presenters.MainPresenter
 import com.ktu.nearfuel.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainContract.View {
 
     private lateinit var navController: NavController
+    private lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
        // setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        presenter = MainPresenter(this)
+
         setupNavigation()
     }
 
@@ -34,15 +40,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (id) {
             R.id.gas_station_list ->
-            navController.navigate(R.id.action_mapFragment_to_gasStationListFragment)
+                presenter.onNavigationItemClick(R.id.action_mapFragment_to_gasStationListFragment)
 
             //R.id.help ->
             //navController.navigate(R.id.secondFragment)
 
             R.id.settings->
-            navController.navigate(R.id.action_mapFragment_to_settingsFragment)
+                presenter.onNavigationItemClick(R.id.action_mapFragment_to_settingsFragment)
         }
         return true
+    }
+
+    override fun navigate(id: Int) {
+        navController.navigate(id)
     }
 
     private fun setupNavigation() {
@@ -71,8 +81,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } else {
             super.onBackPressed()
         }
-
     }
-
-
 }
