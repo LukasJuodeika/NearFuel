@@ -17,13 +17,16 @@ class GasStationListFragment : Fragment()
     lateinit var pagerAdapter: ViewPagerAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.gas_station_list_view,null)
-
-        pagerAdapter = ViewPagerAdapter(activity!!.supportFragmentManager)
-        rootView.viewpager.adapter = pagerAdapter
-        rootView.tablayout.setupWithViewPager(rootView.viewpager)
-
+        setupViewPager(rootView)
 
         return rootView
+    }
+
+    private fun setupViewPager(view: View)
+    {
+        pagerAdapter = ViewPagerAdapter(childFragmentManager)
+        view.viewpager.adapter = pagerAdapter
+        view.tablayout.setupWithViewPager(view.viewpager)
     }
 
     override fun onAttach(context: Context) {
