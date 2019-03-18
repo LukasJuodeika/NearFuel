@@ -3,9 +3,8 @@ package com.ktu.nearfuel.views.fragments
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.views.ViewPagerAdapter
@@ -15,6 +14,12 @@ import kotlinx.android.synthetic.main.gas_station_list_view.view.*
 class GasStationListFragment : Fragment()
 {
     lateinit var pagerAdapter: ViewPagerAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.gas_station_list_view,null)
         setupViewPager(rootView)
@@ -42,5 +47,25 @@ class GasStationListFragment : Fragment()
             activity!!.toolbar.elevation = 8F
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.stations_list_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId)
+        {
+            R.id.sort1->
+                Toast.makeText(context,"Sort1",Toast.LENGTH_SHORT).show()
+            R.id.sort2->
+                Toast.makeText(context,"Sort2",Toast.LENGTH_SHORT).show()
+            R.id.sort3->
+                Toast.makeText(context,"Sort3",Toast.LENGTH_SHORT).show()
+            R.id.sort4->
+                Toast.makeText(context,"Sort4",Toast.LENGTH_SHORT).show()
+        }
+        return true
     }
 }
