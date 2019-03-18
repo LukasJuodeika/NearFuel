@@ -10,7 +10,7 @@
 
     <style name="AppTheme.Launcher">
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <!--<item name="android:windowBackground">@drawable/launch_screen</item>-->
     </style>
 
     <style name="Widget.PrayerTimes.FABlikeButton" parent="@style/Widget.MaterialComponents.Button">

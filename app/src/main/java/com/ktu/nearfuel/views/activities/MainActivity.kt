@@ -1,7 +1,8 @@
-package com.ktu.nearfuel
+package com.ktu.nearfuel.views.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ktu.nearfuel.R
 
 class MainActivity : AppCompatActivity() {
 
