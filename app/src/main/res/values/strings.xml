@@ -6,4 +6,5 @@
     <string name="gas_stations">Gas stations</string>
     <string name="map">Map</string>
     <string name="add_station">Add station</string>
+    <string name="settings">Settings</string>
 </resources>

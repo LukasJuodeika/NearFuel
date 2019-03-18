@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             //R.id.help ->
             //navController.navigate(R.id.secondFragment)
 
-            //R.id.settings->
-            //navController.navigate(R.id.thirdFragment)
+            R.id.settings->
+            navController.navigate(R.id.action_mapFragment_to_settingsFragment)
         }
         return true
     }
