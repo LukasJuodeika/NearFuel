@@ -1,6 +1,6 @@
 package com.ktu.components.contracts
 
-interface MapContracts
+interface MapContract
 {
     interface View
     {
