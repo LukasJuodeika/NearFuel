@@ -6,14 +6,17 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.ktu.components.contracts.StationListContract
+import com.ktu.components.presenters.StationListPresenter
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.views.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.gas_station_list_view.view.*
 
-class GasStationListFragment : Fragment()
+class StationListFragment : Fragment(), StationListContract.View
 {
-    lateinit var pagerAdapter: ViewPagerAdapter
+    private lateinit var pagerAdapter: ViewPagerAdapter
+    private lateinit var presenter: StationListPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +25,9 @@ class GasStationListFragment : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.gas_station_list_view,null)
+        presenter = StationListPresenter(this)
         setupViewPager(rootView)
+
 
         return rootView
     }
