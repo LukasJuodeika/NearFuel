@@ -13,22 +13,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tablayout"
-            android:background="@color/colorTransparent"
+            android:background="@color/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <com.google.android.material.tabs.TabItem
-                tools:text="Petrol"
+                android:text="@string/petrol"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"/>
 
         <com.google.android.material.tabs.TabItem
-                tools:text="Diesel"
+                android:text="@string/diesel"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"/>
 
         <com.google.android.material.tabs.TabItem
-                tools:text="Gas"
+                android:text="@string/gas"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"/>
 
