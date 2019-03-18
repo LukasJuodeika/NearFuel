@@ -41,17 +41,18 @@ class StationListFragment : Fragment(), StationListContract.View
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity!!.toolbar.elevation = 0F
-        }
+        presenter.onAttach()
     }
 
     override fun onDetach() {
         super.onDetach()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity!!.toolbar.elevation = 8F
-        }
+        presenter.onDetach()
+    }
 
+    override fun changeElevation(elevation : Float){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            activity!!.toolbar.elevation = elevation
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -60,19 +61,25 @@ class StationListFragment : Fragment(), StationListContract.View
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId)
-        {
-            R.id.sort1->
-                Toast.makeText(context,"Sort1",Toast.LENGTH_SHORT).show()
-            R.id.sort2->
-                Toast.makeText(context,"Sort2",Toast.LENGTH_SHORT).show()
-            R.id.sort3->
-                Toast.makeText(context,"Sort3",Toast.LENGTH_SHORT).show()
-            R.id.sort4->
-                Toast.makeText(context,"Sort4",Toast.LENGTH_SHORT).show()
-            else->
+        when(item.itemId) {
+            R.id.sort1 ->{
+                Toast.makeText(context, "Sort1", Toast.LENGTH_SHORT).show()
+                presenter.sort1()
+            }
+            R.id.sort2 ->{
+                Toast.makeText(context, "Sort2", Toast.LENGTH_SHORT).show()
+                presenter.sort2()
+            }
+            R.id.sort3 ->{
+                Toast.makeText(context, "Sort3", Toast.LENGTH_SHORT).show()
+                presenter.sort3()
+            }
+            R.id.sort4 ->{
+                Toast.makeText(context, "Sort4", Toast.LENGTH_SHORT).show()
+                presenter.sort4()
+            }
+            else ->
                 return super.onOptionsItemSelected(item)
-
         }
         return true
     }
