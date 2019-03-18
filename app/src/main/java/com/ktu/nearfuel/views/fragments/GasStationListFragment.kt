@@ -65,6 +65,9 @@ class GasStationListFragment : Fragment()
                 Toast.makeText(context,"Sort3",Toast.LENGTH_SHORT).show()
             R.id.sort4->
                 Toast.makeText(context,"Sort4",Toast.LENGTH_SHORT).show()
+            else->
+                return super.onOptionsItemSelected(item)
+
         }
         return true
     }
