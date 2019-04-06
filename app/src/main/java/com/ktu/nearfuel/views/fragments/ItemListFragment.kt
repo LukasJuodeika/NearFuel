@@ -11,7 +11,7 @@ import com.ktu.components.contracts.ItemListContract
 import com.ktu.components.objects.GasStation
 import com.ktu.components.presenters.ItemListPresenter
 import com.ktu.nearfuel.R
-import com.ktu.nearfuel.views.components.ListAdapter
+import com.ktu.nearfuel.components.ListAdapter
 import kotlinx.android.synthetic.main.item_list_fragment.view.*
 
 class ItemListFragment : Fragment(), ItemListContract.View {

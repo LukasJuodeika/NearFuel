@@ -1,4 +1,4 @@
-package com.ktu.nearfuel.views.components
+package com.ktu.nearfuel.components
 
 import android.view.LayoutInflater
 import android.view.View

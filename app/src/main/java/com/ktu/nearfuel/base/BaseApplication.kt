@@ -1,4 +1,4 @@
-package com.ktu.nearfuel.views.base
+package com.ktu.nearfuel.base
 
 import android.app.Application
 
