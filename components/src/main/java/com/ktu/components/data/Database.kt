@@ -11,6 +11,7 @@ import com.ktu.components.objects.GasStation
     ],
     version = 1,
     exportSchema = false
+
 )
 abstract class Database : RoomDatabase()
 {

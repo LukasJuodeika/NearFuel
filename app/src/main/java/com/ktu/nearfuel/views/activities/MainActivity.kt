@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         presenter = MainPresenter(this)
-        presenter1.getStationsNearLocation(latLng = LatLng (21.0,24.5))
+        presenter1.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
 
         setupNavigation()
     }

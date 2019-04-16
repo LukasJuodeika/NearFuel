@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.ktu.components.objects.GasStation
+import io.reactivex.Flowable
 
 @Dao
 interface GasStationDao{
@@ -17,4 +18,7 @@ interface GasStationDao{
 
     @Query ("DELETE FROM GasStation")
     fun deleteAllData()
+
+    @Query ("SELECT * FROM GasStation")
+    fun getAllGasStations(): Flowable<List<GasStation>>
 }
