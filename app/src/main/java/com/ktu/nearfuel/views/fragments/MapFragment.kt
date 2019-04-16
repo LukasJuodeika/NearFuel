@@ -9,27 +9,25 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.ktu.components.contracts.MapContract
 import com.ktu.components.presenters.MapPresenter
-import com.ktu.nearfuel.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.map_fragment.view.*
 import com.google.android.gms.maps.MapView
-
-
-
+import dagger.android.support.AndroidSupportInjection
 
 
 class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 {
+
     @SuppressLint("MissingPermission")
     override fun onMapReady(mMap: GoogleMap) {
         this.mMap = mMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
     }
+
 
     private lateinit var presenter: MapContract.Presenter
     private lateinit var navController: NavController
@@ -52,6 +50,10 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         return rootView
     }
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
     override fun onDestroy() {
         super.onDestroy()
         mapView.onDestroy()
@@ -68,6 +70,9 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
             presenter.addStationClicked()
         }
     }
+
+    private fun performDependencyInjection() = AndroidSupportInjection.inject(this)
+
 
     override fun openAddStationFragment() {
         navController.navigate(com.ktu.nearfuel.R.id.action_mapFragment_to_addStationFragment)
