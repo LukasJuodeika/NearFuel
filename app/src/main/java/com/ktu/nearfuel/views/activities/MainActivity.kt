@@ -4,20 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.navigation.NavigationView
 import com.ktu.components.contracts.MainContract
 import com.ktu.components.presenters.MainPresenter
 import com.ktu.nearfuel.R
-import com.ktu.nearfuel.ui.main.presenter.MainMVPPresenter
+import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
 import com.ktu.nearfuel.ui.main.view.MainMVPView
 import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -28,7 +25,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var presenter: MainContract.Presenter
 
     @Inject
-    internal lateinit var presenter1: MainMVPPresenter<MainMVPView>
+    internal lateinit var presenter1: MapsNewContract<MainMVPView>
 //    @Inject
 //    internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
@@ -41,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         presenter = MainPresenter(this)
+        presenter1.getStationsNearLocation(latLng = LatLng (21.0,24.5))
 
         setupNavigation()
     }

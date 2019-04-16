@@ -10,13 +10,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 class RetrofitModule {
 
     internal val httpLoggingInterceptor: HttpLoggingInterceptor
         @Provides
-        @ApplicationScope
+        @Singleton
         get() {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -24,13 +25,13 @@ class RetrofitModule {
         }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     internal fun getApiInterface(retroFit: Retrofit): APIInterface {
         return retroFit.create<APIInterface>(APIInterface::class.java!!)
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     internal fun getRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.coinmarketcap.com/v1/")
@@ -41,7 +42,7 @@ class RetrofitModule {
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     internal fun getOkHttpCleint(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)

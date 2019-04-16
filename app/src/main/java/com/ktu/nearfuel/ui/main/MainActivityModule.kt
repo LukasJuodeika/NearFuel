@@ -1,6 +1,6 @@
 package com.ktu.nearfuel.ui.main
-import com.ktu.nearfuel.ui.main.presenter.MainMVPPresenter
-import com.ktu.nearfuel.ui.main.presenter.MainPresenter
+import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
+import com.ktu.nearfuel.ui.main.presenter.MapsNewPresenter
 import com.ktu.nearfuel.ui.main.view.MainMVPView
 import dagger.Module
 import dagger.Provides
@@ -10,7 +10,7 @@ import dagger.Provides
 class MainActivityModule {
 
     @Provides
-    internal fun provideMainPresenter(mainPresenter: MainPresenter<MainMVPView>)
-            : MainMVPPresenter<MainMVPView> = mainPresenter
+    internal fun provideMainPresenter(mapsNewPresenter: MapsNewPresenter<MainMVPView>)
+            : MapsNewContract<MainMVPView> = mapsNewPresenter
 
 }
