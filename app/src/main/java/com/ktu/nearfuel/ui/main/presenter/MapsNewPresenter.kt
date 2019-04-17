@@ -16,6 +16,8 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.V
 import io.reactivex.Observable
 import kotlinx.coroutines.Dispatchers
 import android.icu.lang.UCharacter.GraphemeClusterBreak.V
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.Completable
 import io.reactivex.functions.Consumer
 import io.reactivex.internal.util.NotificationLite.accept
@@ -26,6 +28,10 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     protected val apiInterface: APIInterface,
     protected val gasStationDao:GasStationDao
 ) : MapsNewContract<V> {
+    override fun getGasStationsLivedata(): MutableLiveData<List<GasStation>> {
+       return listGasStationLiveData
+    }
+
     override fun getStationsNearLocation(latLng: LatLng) {
         val location= latLng.latitude.toString() + "," +latLng.longitude.toString()
         disposable.add(apiInterface.getNearestGasStations(location, "distance", "gas_station","AIzaSyCSXmOpvyXwUwosS07ROsqv0FLICbIYTBo")
@@ -66,13 +72,14 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         Log.d("response", it.size.toString())
+                        listGasStationLiveData.value = it
 
                     // showListOfEmployess(employees);
             })
+    }
 
-
-
-
+   val listGasStationLiveData: MutableLiveData<List<GasStation>> by lazy {
+        MutableLiveData<List<GasStation>>()
     }
 
 

@@ -2,14 +2,17 @@ package com.ktu.nearfuel.views.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.navigation.NavigationView
 import com.ktu.components.contracts.MainContract
+import com.ktu.components.objects.GasStation
 import com.ktu.components.presenters.MainPresenter
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
@@ -39,6 +42,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         presenter = MainPresenter(this)
         presenter1.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
+        val gasStations = Observer<List<GasStation>> { gasStations ->
+
+            Log.d("responsegood", gasStations.size.toString())
+        }
+
+        presenter1.getGasStationsLivedata().observe(this, gasStations)
 
         setupNavigation()
     }
