@@ -5,15 +5,22 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.ktu.components.contracts.LoginContract
+import com.ktu.components.presenters.LoginPresenter
+import com.ktu.nearfuel.R
 
 class LoginActivity : AppCompatActivity(), LoginContract.View{
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var mPresenter : LoginPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+        //Set instances
         auth = FirebaseAuth.getInstance()
+        mPresenter = LoginPresenter()
     }
 
     override fun onStart() {
@@ -21,6 +28,28 @@ class LoginActivity : AppCompatActivity(), LoginContract.View{
         val currentUser = auth.currentUser
         //updateUI(currentUser)
     }
+
+    private fun updateUI(currentUser : FirebaseUser){
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private fun createAccount(email: String, password : String){
         auth.createUserWithEmailAndPassword(email, password)
