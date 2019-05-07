@@ -5,8 +5,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.ktu.components.contracts.LoginContract
 
-class LoginActivity : AppCompatActivity(){
+class LoginActivity : AppCompatActivity(), LoginContract.View{
 
     private lateinit var auth: FirebaseAuth
 
