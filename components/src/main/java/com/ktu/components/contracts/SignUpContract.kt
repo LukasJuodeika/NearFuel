@@ -1,4 +1,4 @@
 package com.ktu.components.contracts
 
-interface LoginContract {
+interface SignUpContract {
 }

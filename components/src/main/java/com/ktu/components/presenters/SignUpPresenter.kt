@@ -1,4 +1,4 @@
 package com.ktu.components.presenters
 
-class LoginPresenter {
+class SignUpPresenter {
 }
