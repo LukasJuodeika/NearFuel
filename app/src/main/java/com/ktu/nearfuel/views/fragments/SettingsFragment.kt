@@ -15,7 +15,6 @@ class SettingsFragment : Fragment(), SettingsContract.View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.settings_fragment,null)
         presenter = SettingsPresenter(this)
-
         return rootView
     }
 }

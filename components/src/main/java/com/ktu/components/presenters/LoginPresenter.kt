@@ -1,4 +1,10 @@
 package com.ktu.components.presenters
 
-class LoginPresenter {
+import com.ktu.components.contracts.LoginContract
+
+class LoginPresenter(val view: LoginContract.View) : LoginContract.Presenter {
+
+    override fun onNavigationItemClicked(id: Int) {
+        view.navigate(id)
+    }
 }

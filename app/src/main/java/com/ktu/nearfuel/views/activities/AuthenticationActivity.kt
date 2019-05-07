@@ -5,16 +5,19 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.ktu.components.presenters.AuthenticationPresenter
 import com.ktu.nearfuel.R
-import com.ktu.nearfuel.views.fragments.LoginFragment
 import com.ktu.components.contracts.AuthenticationContract
 
 class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View{
 
     //Vars
+    private lateinit var mNavigation : NavController
     private lateinit var auth: FirebaseAuth
     private lateinit var mPresenter : AuthenticationPresenter
 
@@ -24,8 +27,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View{
         //Set instances
         auth = FirebaseAuth.getInstance()
         mPresenter = AuthenticationPresenter(this)
-
-        navigate(LoginFragment())
+        mNavigation = findNavController(R.id.login_host_fragment)
     }
 
     override fun onStart() {
@@ -35,7 +37,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View{
     }
 
     private fun navigate(fragment : Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.login_host_layout, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.login_host_layout, fragment).addToBackStack(null).commit()
     }
 
     private fun updateUI(currentUser : FirebaseUser){

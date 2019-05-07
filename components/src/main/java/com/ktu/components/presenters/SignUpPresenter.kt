@@ -1,4 +1,6 @@
 package com.ktu.components.presenters
 
-class SignUpPresenter {
+import com.ktu.components.contracts.SignUpContract
+
+class SignUpPresenter(val view: SignUpContract.View) {
 }
