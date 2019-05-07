@@ -24,8 +24,9 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(mMap: GoogleMap) {
-        this.mMap = mMap;
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        this.mMap = mMap
+        mMap.uiSettings.isMyLocationButtonEnabled = false
+
     }
 
 

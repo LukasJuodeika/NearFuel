@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "735246050561",
+    "firebase_url": "https://near-fuel-sp.firebaseio.com",
+    "project_id": "near-fuel-sp",
+    "storage_bucket": "near-fuel-sp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735246050561:android:11852aa66851a043",
+        "android_client_info": {
+          "package_name": "com.ktu.nearfuel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735246050561-22t78uacs5uoatuma26e49fb8e29452q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN-tjJVOZYwk5tqevsSpbPohTM9aJlKFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735246050561-22t78uacs5uoatuma26e49fb8e29452q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
