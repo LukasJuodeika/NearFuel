@@ -1,18 +1,14 @@
 package com.ktu.nearfuel.views.activities
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.ktu.components.presenters.AuthenticationPresenter
 import com.ktu.nearfuel.R
 import com.ktu.components.contracts.AuthenticationContract
+
 
 class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View{
 
@@ -32,7 +28,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View{
 
     override fun onStart() {
         super.onStart()
-        val currentUser = mAuth.currentUser
+        //val currentUser = mAuth.currentUser
         //updateUI(currentUser)
     }
 

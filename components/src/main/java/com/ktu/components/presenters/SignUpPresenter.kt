@@ -25,8 +25,12 @@ class SignUpPresenter(val view: SignUpContract.View, private val mAuth : Firebas
                     val user = mAuth.currentUser
                     view.navigateToLogin()
                 } else {
-                    // If sign up fails, display a message to the user.
-                    view.displayError("Authentication failed.")
+                    val exception = task.exception
+                    var errorCode = "Authentication failed."
+                    if(exception != null){
+                        errorCode = exception.message.toString()
+                    }
+                    view.displayError(errorCode)
                 }
             }
     }

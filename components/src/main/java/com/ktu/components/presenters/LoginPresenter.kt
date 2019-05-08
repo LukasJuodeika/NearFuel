@@ -25,10 +25,13 @@ class LoginPresenter(val view: LoginContract.View, val mAuth: FirebaseAuth) : Lo
                     val user = mAuth.currentUser
                     view.login()
                 } else {
-                    // If sign in fails, display a message to the user.
-                    view.displayError("Authentication failed.")
+                    val exception = task.exception
+                    var errorCode = "Authentication failed."
+                    if(exception != null){
+                        errorCode = exception.message.toString()
+                    }
+                    view.displayError(errorCode)
                 }
-
                 // ...
             }
     }
