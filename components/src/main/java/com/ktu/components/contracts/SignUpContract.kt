@@ -5,6 +5,8 @@ interface SignUpContract {
         fun navigate(id: Int)
         fun navigateToLogin()
         fun displayError(message: String)
+        fun displayBlankFieldError()
+        fun displayGenericError()
     }
     interface Presenter{
         fun onNavigationItemClicked(id: Int)

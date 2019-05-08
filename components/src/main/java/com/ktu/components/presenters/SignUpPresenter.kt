@@ -9,7 +9,7 @@ class SignUpPresenter(val view: SignUpContract.View, private val mAuth : Firebas
         if (email.isNotEmpty() && password.isNotEmpty()){
             createAccount(email, password)
         }else{
-            view.displayError("All fields must be filled in.")
+            view.displayBlankFieldError()
         }
     }
 
@@ -26,11 +26,14 @@ class SignUpPresenter(val view: SignUpContract.View, private val mAuth : Firebas
                     view.navigateToLogin()
                 } else {
                     val exception = task.exception
-                    var errorCode = "Authentication failed."
+                    val errorCode : String
                     if(exception != null){
                         errorCode = exception.message.toString()
+                        view.displayError(errorCode)
+                    }else{
+                        view.displayGenericError()
                     }
-                    view.displayError(errorCode)
+
                 }
             }
     }

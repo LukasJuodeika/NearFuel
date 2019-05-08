@@ -3,13 +3,13 @@ package com.ktu.components.presenters
 import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.contracts.LoginContract
 
-class LoginPresenter(val view: LoginContract.View, val mAuth: FirebaseAuth) : LoginContract.Presenter {
+class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAuth) : LoginContract.Presenter {
 
     override fun onLoginClicked(email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty()){
             login(email, password)
         }else{
-            view.displayError("All fields must be filled in.")
+            view.displayBlankFieldsError()
         }
     }
 
@@ -26,11 +26,13 @@ class LoginPresenter(val view: LoginContract.View, val mAuth: FirebaseAuth) : Lo
                     view.login()
                 } else {
                     val exception = task.exception
-                    var errorCode = "Authentication failed."
+                    val errorCode : String
                     if(exception != null){
                         errorCode = exception.message.toString()
+                        view.displayError(errorCode)
+                    }else{
+                        view.displayGenericError()
                     }
-                    view.displayError(errorCode)
                 }
                 // ...
             }

@@ -52,4 +52,12 @@ class SignUpFragment : Fragment(), SignUpContract.View {
     override fun navigateToLogin() {
         navigate(R.id.action_signUpFragment_to_loginFragment)
     }
+
+    override fun displayBlankFieldError() {
+        Toast.makeText(activity, getString(R.string.blank_fields), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun displayGenericError() {
+        Toast.makeText(activity, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show()
+    }
 }
