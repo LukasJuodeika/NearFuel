@@ -45,12 +45,12 @@ class SignUpFragment : Fragment(), SignUpContract.View {
         mNavigation.navigate(id)
     }
 
-    override fun displayError(message: String) {
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
-    }
-
     override fun navigateToLogin() {
         navigate(R.id.action_signUpFragment_to_loginFragment)
+    }
+
+    override fun displayError(message: String) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun displayBlankFieldError() {
