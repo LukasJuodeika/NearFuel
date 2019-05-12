@@ -2,11 +2,13 @@ package com.ktu.nearfuel.views.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.gms.maps.GoogleMap
@@ -16,7 +18,13 @@ import com.ktu.components.presenters.MapPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.map_fragment.view.*
 import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.LatLng
+import com.ktu.components.objects.GasStation
+import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
+import com.ktu.nearfuel.ui.main.view.MainMVPView
 import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
+import javax.inject.Named
 
 
 class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
@@ -31,6 +39,11 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
 
     private lateinit var presenter: MapContract.Presenter
+
+    @Inject
+    @Named("MapFragment")
+    internal lateinit var dagger2Presenter: MapsNewContract<MainMVPView>
+
     private lateinit var navController: NavController
     private lateinit var rootView: View
     private lateinit var mapView: MapView
@@ -51,9 +64,25 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         return rootView
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        observeMarkersByGoogleLocation()
+        dagger2Presenter.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
+    }
+
+    fun observeMarkersByGoogleLocation(){
+        val gasStations = Observer<List<GasStation>> { gasStations ->
+
+            Log.d("responsegood", gasStations.size.toString())
+        }
+
+        dagger2Presenter.getGasStationsLivedata().observe(this, gasStations)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidSupportInjection.inject(this)
     }
     override fun onDestroy() {
         super.onDestroy()
