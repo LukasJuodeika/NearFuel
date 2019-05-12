@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -25,11 +26,15 @@ class LoginFragment: Fragment(), LoginContract.View {
     private lateinit var mAuth : FirebaseAuth
     private lateinit var mCallback: OnLoginListener//Callback for finishing the activity
 
+    //UI
+    private lateinit var mProgressBar : ProgressBar
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         mAuth = FirebaseAuth.getInstance()
         mPresenter = LoginPresenter(this, mAuth)
         mNavigation = findNavController()
+        setLayouts(view)
         setClickListeners(view)
         return view
     }
@@ -42,6 +47,10 @@ class LoginFragment: Fragment(), LoginContract.View {
             throw ClassCastException(activity.toString()
                     + " must implement OnLoginListener")
         }
+    }
+
+    private fun setLayouts(view: View){
+        mProgressBar = view.progress_bar
     }
 
     private fun setClickListeners(view: View){
@@ -61,6 +70,14 @@ class LoginFragment: Fragment(), LoginContract.View {
 
     override fun login() {
         mCallback.onLogin()
+    }
+
+    override fun showProgress() {
+        mProgressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        mProgressBar.visibility = View.GONE
     }
 
     override fun displayError(message: String) {

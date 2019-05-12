@@ -11,7 +11,7 @@
     <item>
 
         <bitmap
-                android:src="@drawable/logo"
+                android:src="@drawable/splash_screen_icon"
                 android:gravity="center"/>
 
     </item>

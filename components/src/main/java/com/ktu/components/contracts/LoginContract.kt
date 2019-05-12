@@ -7,6 +7,8 @@ interface LoginContract {
         fun displayError(message: String)
         fun displayBlankFieldsError()
         fun displayGenericError()
+        fun showProgress()
+        fun hideProgress()
     }
     interface Presenter{
         fun onNavigationItemClicked(id: Int)
