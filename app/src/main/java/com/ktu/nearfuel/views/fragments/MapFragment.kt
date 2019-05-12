@@ -25,6 +25,11 @@ import com.ktu.nearfuel.ui.main.view.MainMVPView
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 import javax.inject.Named
+import android.R
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.MarkerOptions
+
+
 
 
 class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
@@ -34,6 +39,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     override fun onMapReady(mMap: GoogleMap) {
         this.mMap = mMap
         mMap.uiSettings.isMyLocationButtonEnabled = false
+        observeMarkersByGoogleLocation()
 
     }
 
@@ -66,13 +72,23 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        observeMarkersByGoogleLocation()
+
         dagger2Presenter.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
     }
 
     fun observeMarkersByGoogleLocation(){
         val gasStations = Observer<List<GasStation>> { gasStations ->
 
+            for ( station in gasStations)
+            {
+                mMap.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(station.lat.toDouble(), station.lng.toDouble()))
+                        .title(station.title)
+                        .snippet(station.price)
+                      //  .icon(BitmapDescriptorFactory.fromResource(R.drawable.btn_plus))
+                )
+            }
             Log.d("responsegood", gasStations.size.toString())
         }
 
