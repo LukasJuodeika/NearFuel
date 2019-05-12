@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -18,19 +19,25 @@ import com.ktu.nearfuel.R
 import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
 import com.ktu.nearfuel.ui.main.view.MainMVPView
 import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainContract.View{
-    //override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainContract.View, HasSupportFragmentInjector{
+
 
     private lateinit var navController: NavController
     private lateinit var presenter: MainContract.Presenter
 
     @Inject
     internal lateinit var presenter1: MapsNewContract<MainMVPView>
-//    @Inject
-//    internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+
+    override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
        // setTheme(R.style.AppTheme)
@@ -41,13 +48,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         presenter = MainPresenter(this)
-        presenter1.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
-        val gasStations = Observer<List<GasStation>> { gasStations ->
-
-            Log.d("responsegood", gasStations.size.toString())
-        }
-
-        presenter1.getGasStationsLivedata().observe(this, gasStations)
 
         setupNavigation()
     }
