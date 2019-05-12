@@ -1,9 +1,11 @@
 package com.ktu.nearfuel.views.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -11,6 +13,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.contracts.MainContract
 import com.ktu.components.objects.GasStation
 import com.ktu.components.presenters.MainPresenter
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var navController: NavController
     private lateinit var presenter: MainContract.Presenter
+    private lateinit var mAuth : FirebaseAuth
 
     @Inject
     internal lateinit var presenter1: MapsNewContract<MainMVPView>
@@ -36,11 +40,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
        // setTheme(R.style.AppTheme)
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-
-
         setContentView(R.layout.activity_main)
-
-        presenter = MainPresenter(this)
+        mAuth = FirebaseAuth.getInstance()
+        presenter = MainPresenter(this, mAuth)
+        presenter.onCreate()
         presenter1.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
         val gasStations = Observer<List<GasStation>> { gasStations ->
 
@@ -71,6 +74,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.settings->
                 presenter.onNavigationItemClick(R.id.action_mapFragment_to_settingsFragment)
+
+            R.id.sign_out ->
+                presenter.onSignOutClick()
         }
         return true
     }
@@ -102,8 +108,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            moveTaskToBack(true) //Disable back stack for login screen
+        }else {
+            super.onBackPressed()
         }
+    }
+
+    override fun signOut() {
+        val intent = Intent(this, AuthenticationActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun displayEmail(email: String) {
+        Toast.makeText(this, "Logged in as $email", Toast.LENGTH_SHORT).show()
     }
 }
