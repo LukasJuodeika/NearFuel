@@ -7,7 +7,8 @@ class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAu
 
     override fun onLoginClicked(email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty()){
-            login(email, password)
+            view.showProgress()
+            authenticate(email, password)
         }else{
             view.displayBlankFieldsError()
         }
@@ -17,7 +18,7 @@ class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAu
         view.navigate(id)
     }
 
-    private fun login(email : String, password : String){
+    private fun authenticate(email : String, password : String){
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -33,6 +34,7 @@ class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAu
                     }else{
                         view.displayGenericError()
                     }
+                    view.hideProgress()
                 }
                 // ...
             }

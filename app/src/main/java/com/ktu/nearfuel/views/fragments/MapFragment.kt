@@ -58,18 +58,21 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(com.ktu.nearfuel.R.layout.map_fragment, container, false)
 
-        presenter = MapPresenter(this)
+
         this.rootView = rootView
-        setClickListeners(rootView)
         mapView = rootView.findViewById(com.ktu.nearfuel.R.id.map_view) as MapView
         mapView.onCreate(savedInstanceState)
-
-
         mapView.getMapAsync(this)
+        presenter = MapPresenter(this)
+        setClickListeners(rootView)
+
 
         return rootView
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+      
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -102,7 +105,6 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     }
     override fun onDestroy() {
         super.onDestroy()
-        mapView.onDestroy()
     }
 
     override fun onLowMemory() {
