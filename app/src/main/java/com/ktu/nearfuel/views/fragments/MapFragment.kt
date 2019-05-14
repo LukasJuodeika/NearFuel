@@ -72,6 +72,8 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mapView.onDestroy()
+    }
       
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
