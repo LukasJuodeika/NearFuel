@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -21,11 +22,13 @@ import com.ktu.nearfuel.R
 import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
 import com.ktu.nearfuel.ui.main.view.MainMVPView
 import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainContract.View{
-    //override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainContract.View, HasSupportFragmentInjector{
+
 
     private lateinit var navController: NavController
     private lateinit var presenter: MainContract.Presenter
@@ -33,8 +36,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     @Inject
     internal lateinit var presenter1: MapsNewContract<MainMVPView>
-//    @Inject
-//    internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+
+    override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
