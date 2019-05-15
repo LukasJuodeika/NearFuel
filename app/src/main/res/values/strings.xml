@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">NearFuel</string>
+    <string name="petrol">Petrol</string>
+    <string name="diesel">Diesel</string>
+    <string name="gas">Gas</string>
+    <string name="gas_stations">Gas stations</string>
+    <string name="map">Map</string>
+    <string name="add_station">Add station</string>
+    <string name="settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="signed_out">Signed out</string>
+    <string name="login">Login</string>
+    <string name="sign_out">Sign out</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="no_account">No account yet? Create one</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_member">Already a member? Login</string>
+    <string name="username">Username</string>
+    <string name="sign_up">Sign up</string>
+    <string name="auth_failed">Authentication failed.</string>
+    <string name="blank_fields">All fields must be filled in.</string>
+    <!--For facebook-->
+    <string name="facebook_app_id">324381454920722</string>
+    <string name="fb_login_protocol_scheme">fb324381454920722</string>
 </resources>
