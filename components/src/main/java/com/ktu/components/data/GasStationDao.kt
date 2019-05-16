@@ -13,6 +13,9 @@ interface GasStationDao{
     @Insert(onConflict = REPLACE)
     fun insertGasStation(item: GasStation)
 
+    @Insert(onConflict = REPLACE)
+    fun insertAllGasStations(all: List<GasStation>)
+
     @Query("SELECT * FROM GasStation WHERE fuelType = :fuelType")
     fun getGasStationsByType(fuelType: String): List<GasStation>
 
