@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.presenters.AuthenticationPresenter
 import com.ktu.nearfuel.R
 import com.ktu.components.contracts.AuthenticationContract
+import com.ktu.nearfuel.util.PermissionHandler
 import com.ktu.nearfuel.views.fragments.LoginFragment
 
 
@@ -26,12 +27,19 @@ class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View,
         mAuth = FirebaseAuth.getInstance()
         mPresenter = AuthenticationPresenter(this)
         mNavigation = findNavController(R.id.login_host_fragment)
+        mPresenter.checkForPermissions()
     }
 
     override fun onLogin() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         this.finish()
+    }
+
+    override fun requestPermissions(){
+        if(PermissionHandler.getMissingPermissions(this).size > 0) {
+            PermissionHandler.getPermissions(this)
+        }
     }
 
     companion object{

@@ -1,6 +1,7 @@
 package com.ktu.nearfuel.views.fragments
 
 import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.ktu.components.contracts.MapContract
@@ -25,24 +27,13 @@ import com.ktu.nearfuel.ui.main.view.MainMVPView
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 import javax.inject.Named
-import android.R
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
-
-
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.CameraPosition
 
 
 class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 {
-
-    @SuppressLint("MissingPermission")
-    override fun onMapReady(mMap: GoogleMap) {
-        this.mMap = mMap
-        mMap.uiSettings.isMyLocationButtonEnabled = false
-        observeMarkersByGoogleLocation()
-
-    }
-
 
     private lateinit var presenter: MapContract.Presenter
 
@@ -54,10 +45,15 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     private lateinit var rootView: View
     private lateinit var mapView: MapView
     private lateinit var mMap: GoogleMap
+    //Location
+    private lateinit var mRequest: LocationRequest
+    private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var mLocationCallback: LocationCallback
+    //For following user location
+    private var mOutOfFocus : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(com.ktu.nearfuel.R.layout.map_fragment, container, false)
-
 
         this.rootView = rootView
         mapView = rootView.findViewById(com.ktu.nearfuel.R.id.map_view) as MapView
@@ -66,15 +62,36 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         presenter = MapPresenter(this)
         setClickListeners(rootView)
 
-
         return rootView
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
+        mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
         mapView.onDestroy()
     }
-      
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AndroidSupportInjection.inject(this)
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+        mapView.onResume()
+        navController = rootView.findNavController()
+        mOutOfFocus = false
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
+        mapView.onPause()
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -101,19 +118,6 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        AndroidSupportInjection.inject(this)
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
-    }
-
     private fun setClickListeners(view: View)
     {
         view.add_gas_station.setOnClickListener {
@@ -129,17 +133,48 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        presenter.onResume()
-        mapView.onResume()
-        navController = rootView.findNavController()
+    override fun onMapReady(mMap: GoogleMap) {
+        this.mMap = mMap
+        setMapSettings()
+        setUpLocation()
+        //observeMarkersByGoogleLocation()
+
+    }
+    @SuppressLint("MissingPermission")
+    private fun setMapSettings(){
+        mMap.uiSettings.isMyLocationButtonEnabled = true
+        mMap.isMyLocationEnabled = true
+        mMap.setOnCameraMoveListener { mOutOfFocus = true }
+        mMap.setOnMyLocationButtonClickListener { mOutOfFocus = false; false } //returns false
     }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.onPause()
-        mapView.onPause()
+    @SuppressLint("MissingPermission")
+    private fun setUpLocation() {
+        mLocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                if (locationResult == null) {
+                    return
+                }
+                Log.v("MapFragment", "the location :" + locationResult.lastLocation.latitude)
+                if(!mOutOfFocus) moveCamera(locationResult.lastLocation)
+            }
+        }
+        mRequest = LocationRequest.create()
+        mRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mRequest.interval = LOCATION_INTERVAL
+        mRequest.fastestInterval = LOCATION_INTERVAL
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
+        mFusedLocationProviderClient.requestLocationUpdates(mRequest, mLocationCallback, null)
+    }
+
+    private fun moveCamera(location: Location){
+        val cameraPosition = CameraPosition.Builder()
+            .target(LatLng(location.latitude, location.longitude)
+            ).zoom(LOCATION_ZOOM).build()
+
+        val cameraUpdate = CameraUpdateFactory
+            .newCameraPosition(cameraPosition)
+        mMap.moveCamera(cameraUpdate)
     }
 
 
@@ -151,5 +186,9 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         activity!!.drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
+    companion object{
+        private const val LOCATION_INTERVAL = 10_000L
+        private const val LOCATION_ZOOM = 16f
+    }
 
 }
