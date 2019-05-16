@@ -51,6 +51,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     private lateinit var mLocationCallback: LocationCallback
     //For following user location
     private var mOutOfFocus : Boolean = false
+    private lateinit var mLastLocation : Location
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(com.ktu.nearfuel.R.layout.map_fragment, container, false)
@@ -144,8 +145,12 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     private fun setMapSettings(){
         mMap.uiSettings.isMyLocationButtonEnabled = true
         mMap.isMyLocationEnabled = true
+        mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.setOnCameraMoveListener { mOutOfFocus = true }
-        mMap.setOnMyLocationButtonClickListener { mOutOfFocus = false; false } //returns false
+        mMap.setOnMyLocationButtonClickListener {
+            mOutOfFocus = false
+            moveCamera(mLastLocation, true)
+            true }
     }
 
     @SuppressLint("MissingPermission")
@@ -155,8 +160,8 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
                 if (locationResult == null) {
                     return
                 }
-                Log.v("MapFragment", "the location :" + locationResult.lastLocation.latitude)
-                if(!mOutOfFocus) moveCamera(locationResult.lastLocation)
+                mLastLocation = locationResult.lastLocation
+                if(!mOutOfFocus) moveCamera(mLastLocation, false)
             }
         }
         mRequest = LocationRequest.create()
@@ -167,14 +172,18 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         mFusedLocationProviderClient.requestLocationUpdates(mRequest, mLocationCallback, null)
     }
 
-    private fun moveCamera(location: Location){
+    private fun moveCamera(location: Location, animate: Boolean){
         val cameraPosition = CameraPosition.Builder()
             .target(LatLng(location.latitude, location.longitude)
             ).zoom(LOCATION_ZOOM).build()
 
         val cameraUpdate = CameraUpdateFactory
             .newCameraPosition(cameraPosition)
-        mMap.moveCamera(cameraUpdate)
+        if(animate){
+            mMap.animateCamera(cameraUpdate)
+        }else{
+            mMap.moveCamera(cameraUpdate)
+        }
     }
 
 
