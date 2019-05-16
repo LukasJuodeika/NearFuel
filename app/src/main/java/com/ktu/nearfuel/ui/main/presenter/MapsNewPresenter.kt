@@ -24,38 +24,62 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     }
 
     override fun getStationsNearLocation(latLng: LatLng) {
-        getAllGasStationsFromDao()
-        getStationsFromApi(latLng)
+        startObservingStationsFromDao()
+        getStationsFromAPI(latLng)
+       // getStationsFromMapsAPI(latLng)
 
     }
-    fun getStationsFromApi(latLng: LatLng){
+//    fun getStationsFromMapsAPI(latLng: LatLng){
+//        val location = latLng.latitude.toString() + "," + latLng.longitude.toString()
+//        disposable.add(apiInterface.getNearestGasStations(
+//            location,
+//            "distance",
+//            "gas_station",
+//            "AIzaSyCSXmOpvyXwUwosS07ROsqv0FLICbIYTBo"
+//        )
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                val gasStationsList: ArrayList<GasStation> = arrayListOf()
+//                for (e in it.results) {
+//                    val gasStation = GasStation()
+//                    gasStation.title = e.name
+//                    gasStation.lat = e.geometry.location.lat.toString()
+//                    gasStation.lng = e.geometry.location.lng.toString()
+//                    gasStationsList.add(gasStation)
+//                    Completable.fromAction {
+//                        gasStationDao.insertGasStation(gasStation)
+//                    }.subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
+//                        }, {
+//
+//                        })
+//                }
+//
+//                Log.d("response", it.toString())
+//            },
+//                {
+//
+//                }, {
+//
+//                }
+//            ))
+//    }
+    fun getStationsFromAPI(latLng: LatLng){
         val location = latLng.latitude.toString() + "," + latLng.longitude.toString()
-        disposable.add(apiInterface.getNearestGasStations(
-            location,
-            "distance",
-            "gas_station",
-            "AIzaSyCSXmOpvyXwUwosS07ROsqv0FLICbIYTBo"
+        disposable.add(apiInterface.getAllGasStations(
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                val gasStationsList: ArrayList<GasStation> = arrayListOf()
-                for (e in it.results) {
-                    val gasStation = GasStation()
-                    gasStation.title = e.name
-                    gasStation.lat = e.geometry.location.lat.toString()
-                    gasStation.lng = e.geometry.location.lng.toString()
-                    gasStationsList.add(gasStation)
-                    Completable.fromAction {
-                        gasStationDao.insertGasStation(gasStation)
-                    }.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        }, {
+                val gasStationResponse  = it
+                Completable.fromAction {
+                    gasStationDao.insertAllGasStations(gasStationResponse.data)
+                }.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    }, {
 
-                        })
-                }
-
-                Log.d("response", it.toString())
+                    })
             },
                 {
 
@@ -65,7 +89,7 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
             ))
     }
 
-    fun getAllGasStationsFromDao() {
+    fun startObservingStationsFromDao() {
         gasStationDao.getAllGasStations()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
