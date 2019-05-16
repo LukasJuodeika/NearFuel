@@ -25,8 +25,8 @@ class ListAdapter(private val list: List<GasStation>) : RecyclerView.Adapter<Lis
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bindView(item: GasStation) {
-            view.list_item_price.text = item.price
-            view.list_item_distance.text = item.distance.toString()
+           // view.list_item_price.text = item.price
+          //  view.list_item_distance.text = item.distance.toString()
             view.list_item_title.text = item.title
         }
     }

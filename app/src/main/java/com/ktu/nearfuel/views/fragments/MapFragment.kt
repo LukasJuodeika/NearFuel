@@ -90,7 +90,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
                     MarkerOptions()
                         .position(LatLng(station.lat.toDouble(), station.lng.toDouble()))
                         .title(station.title)
-                        .snippet(station.price)
+                        .snippet(station.address)
                       //  .icon(BitmapDescriptorFactory.fromResource(R.drawable.btn_plus))
                 )
             }
