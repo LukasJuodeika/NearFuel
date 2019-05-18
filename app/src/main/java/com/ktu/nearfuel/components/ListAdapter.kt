@@ -8,7 +8,7 @@ import com.ktu.components.objects.GasStation
 import com.ktu.nearfuel.R
 import kotlinx.android.synthetic.main.gas_station_list_item.view.*
 
-class ListAdapter(private val list: List<GasStation>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(private var list: List<GasStation>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -20,6 +20,11 @@ class ListAdapter(private val list: List<GasStation>) : RecyclerView.Adapter<Lis
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindView(list[position])
+    }
+
+    fun updateList(list: List<GasStation>){
+        this.list = list
+        notifyDataSetChanged()
     }
 
 
