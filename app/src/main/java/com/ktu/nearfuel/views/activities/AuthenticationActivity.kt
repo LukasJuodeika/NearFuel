@@ -16,17 +16,13 @@ import com.ktu.nearfuel.views.fragments.LoginFragment
 class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View, LoginFragment.OnLoginListener{
 
     //Variables
-    private lateinit var mNavigation : NavController
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var mPresenter : AuthenticationPresenter
+    //private var mIdlingResource = CountingIdlingResource()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        //Set instances
-        mAuth = FirebaseAuth.getInstance()
         mPresenter = AuthenticationPresenter(this)
-        mNavigation = findNavController(R.id.login_host_fragment)
         mPresenter.checkForPermissions()
     }
 
@@ -40,9 +36,5 @@ class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View,
         if(PermissionHandler.getMissingPermissions(this).size > 0) {
             PermissionHandler.getPermissions(this)
         }
-    }
-
-    companion object{
-        const val TAG = "AuthenticationActivity"
     }
 }

@@ -1,16 +1,18 @@
 package com.ktu.components.presenters
 
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.contracts.LoginContract
 
 class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAuth) : LoginContract.Presenter {
 
     override fun onLoginClicked(email: String, password: String) {
-        if (email.isNotEmpty() && password.isNotEmpty()){
+        if (email.isNotBlank() && password.isNotBlank()){
             view.showProgress()
             authenticate(email, password)
         }else{
-            view.displayBlankFieldsError()
+            view.displayBlankFieldError()
         }
     }
 
@@ -22,8 +24,6 @@ class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAu
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    val user = mAuth.currentUser
                     view.login()
                 } else {
                     val exception = task.exception

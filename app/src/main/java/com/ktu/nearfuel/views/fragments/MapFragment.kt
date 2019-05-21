@@ -164,7 +164,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
             true }
         mMap.setInfoWindowAdapter(StationInfoWindowAdapter(context!!.applicationContext))
         mMap.setOnInfoWindowLongClickListener {
-            openAddStationFragment()
+
         }
     }
 

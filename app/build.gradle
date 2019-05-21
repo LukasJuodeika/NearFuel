@@ -37,8 +37,10 @@ dependencies {
 //    implementation 'com.android.support:design:28.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0-beta01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-beta01'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.android.material:material:1.0.0'
 
     def nav_version = "2.0.0"
@@ -80,25 +82,20 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
-
     //Lifecycle
-
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-
     //Nice stuff
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x"
-
     //Firebase
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-auth:17.0.0'
-
     //Facebook login only
     implementation 'com.facebook.android:facebook-login:4.33.0'
-
     //Location
     implementation "com.google.android.gms:play-services-location:16.0.0"
-
+    //Mockito
+    testImplementation "org.mockito:mockito-core:2.27.0"
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -5,7 +5,7 @@ interface LoginContract {
         fun navigate(id: Int)
         fun login()
         fun displayError(message: String)
-        fun displayBlankFieldsError()
+        fun displayBlankFieldError()
         fun displayGenericError()
         fun showProgress()
         fun hideProgress()
