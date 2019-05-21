@@ -17,9 +17,9 @@ class StationInfoWindowAdapter(mContext: Context) : GoogleMap.InfoWindowAdapter 
         val station : GasStation = marker.tag as GasStation
         view.iw_title.text = station.title
         view.iw_address.text = station.address
-        view.iw_diesel_price.text = "Diesel price: ${station.diesel_price}"
-        view.iw_fuel_price.text = "Fuel price: ${station.fuel_price}"
-        view.iw_gas_price.text = "Gas price: ${station.gas_price}"
+        view.iw_diesel_price.text = "Diesel: ${station.diesel_price}"
+        view.iw_fuel_price.text = "Fuel: ${station.fuel_price}"
+        view.iw_gas_price.text = "Gas: ${station.gas_price}"
     }
 
     override fun getInfoContents(marker: Marker?): View {

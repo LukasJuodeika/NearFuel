@@ -29,7 +29,9 @@ import javax.inject.Inject
 import javax.inject.Named
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.ktu.nearfuel.R
 import com.ktu.nearfuel.views.StationInfoWindowAdapter
 
 
@@ -55,10 +57,10 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     private lateinit var mLastLocation : Location
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(com.ktu.nearfuel.R.layout.map_fragment, container, false)
+        val rootView = inflater.inflate(R.layout.map_fragment, container, false)
 
         this.rootView = rootView
-        mapView = rootView.findViewById(com.ktu.nearfuel.R.id.map_view) as MapView
+        mapView = rootView.findViewById(R.id.map_view) as MapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
         presenter = MapPresenter(this)
@@ -108,7 +110,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
                 val marker = mMap.addMarker(
                     MarkerOptions()
                         .position(LatLng(station.lat.toDouble(), station.lng.toDouble()))
-                      //  .icon(BitmapDescriptorFactory.fromResource(R.drawable.btn_plus))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.station_marker))
                 )
                 marker.tag = station
             }
@@ -130,7 +132,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
 
     override fun openAddStationFragment() {
-        navController.navigate(com.ktu.nearfuel.R.id.action_mapFragment_to_addStationFragment)
+        navController.navigate(R.id.action_mapFragment_to_addStationFragment)
     }
 
 
