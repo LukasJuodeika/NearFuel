@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+android:background="@android:color/white"
+android:padding="8dp">
+
+    <TextView
+            android:id="@+id/iw_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:ellipsize="end"/>
+
+    <TextView
+            android:id="@+id/iw_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:ellipsize="end"/>
+
+    <TextView
+            android:id="@+id/iw_diesel_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:ellipsize="end"/>
+    <TextView
+            android:id="@+id/iw_gas_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:ellipsize="end"/>
+    <TextView
+            android:id="@+id/iw_fuel_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:ellipsize="end"/>
+
+</LinearLayout>

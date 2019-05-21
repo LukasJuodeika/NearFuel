@@ -30,6 +30,7 @@ import javax.inject.Named
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.ktu.nearfuel.views.StationInfoWindowAdapter
 
 
 class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
@@ -104,13 +105,12 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
             for ( station in gasStations)
             {
-                mMap.addMarker(
+                val marker = mMap.addMarker(
                     MarkerOptions()
                         .position(LatLng(station.lat.toDouble(), station.lng.toDouble()))
-                        .title(station.title)
-                        .snippet(station.address)
                       //  .icon(BitmapDescriptorFactory.fromResource(R.drawable.btn_plus))
                 )
+                marker.tag = station
             }
             Log.d("responsegood", gasStations.size.toString())
         }
@@ -138,19 +138,22 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         this.mMap = mMap
         setMapSettings()
         setUpLocation()
-        //observeMarkersByGoogleLocation()
+        observeMarkersByGoogleLocation()
 
     }
     @SuppressLint("MissingPermission")
     private fun setMapSettings(){
         mMap.uiSettings.isMyLocationButtonEnabled = true
         mMap.isMyLocationEnabled = true
-        mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.setOnCameraMoveListener { mOutOfFocus = true }
         mMap.setOnMyLocationButtonClickListener {
             mOutOfFocus = false
             moveCamera(mLastLocation, true)
             true }
+        mMap.setInfoWindowAdapter(StationInfoWindowAdapter(context!!.applicationContext))
+        mMap.setOnInfoWindowLongClickListener {
+            openAddStationFragment()
+        }
     }
 
     @SuppressLint("MissingPermission")
