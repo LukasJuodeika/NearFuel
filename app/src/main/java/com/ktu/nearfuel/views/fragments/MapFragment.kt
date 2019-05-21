@@ -52,8 +52,6 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     private lateinit var mRequest: LocationRequest
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var mLocationCallback: LocationCallback
-    //For following user location
-    private var mOutOfFocus : Boolean = false
     private lateinit var mLastLocation : Location
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,7 +68,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     }
     override fun onDestroyView() {
         super.onDestroyView()
-        mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
+        stopTracking()
         mapView.onDestroy()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,7 +86,6 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         presenter.onResume()
         mapView.onResume()
         navController = rootView.findNavController()
-        mOutOfFocus = false
     }
 
     override fun onPause() {
@@ -130,6 +127,20 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
     private fun performDependencyInjection() = AndroidSupportInjection.inject(this)
 
+    override fun moveCamera(animate: Boolean){
+        val cameraPosition = CameraPosition.Builder()
+            .target(LatLng(mLastLocation.latitude, mLastLocation.longitude)
+            ).zoom(LOCATION_ZOOM).build()
+
+        val cameraUpdate = CameraUpdateFactory
+            .newCameraPosition(cameraPosition)
+        if(animate){
+            mMap.animateCamera(cameraUpdate)
+        }else{
+            mMap.moveCamera(cameraUpdate)
+        }
+    }
+
 
     override fun openAddStationFragment() {
         navController.navigate(R.id.action_mapFragment_to_addStationFragment)
@@ -138,19 +149,18 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
     override fun onMapReady(mMap: GoogleMap) {
         this.mMap = mMap
-        setMapSettings()
-        setUpLocation()
+        presenter.onMapReady()
         observeMarkersByGoogleLocation()
 
     }
     @SuppressLint("MissingPermission")
-    private fun setMapSettings(){
+    override fun setMapSettings(){
         mMap.uiSettings.isMyLocationButtonEnabled = true
         mMap.isMyLocationEnabled = true
-        mMap.setOnCameraMoveListener { mOutOfFocus = true }
+        mMap.setOnCameraMoveListener { presenter.setFocus(true) }
         mMap.setOnMyLocationButtonClickListener {
-            mOutOfFocus = false
-            moveCamera(mLastLocation, true)
+            presenter.setFocus(false)
+            moveCamera(true)
             true }
         mMap.setInfoWindowAdapter(StationInfoWindowAdapter(context!!.applicationContext))
         mMap.setOnInfoWindowLongClickListener {
@@ -159,14 +169,14 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     }
 
     @SuppressLint("MissingPermission")
-    private fun setUpLocation() {
+    override fun startTracking() {
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 if (locationResult == null) {
                     return
                 }
                 mLastLocation = locationResult.lastLocation
-                if(!mOutOfFocus) moveCamera(mLastLocation, false)
+                presenter.onLocationResult()
             }
         }
         mRequest = LocationRequest.create()
@@ -177,18 +187,8 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         mFusedLocationProviderClient.requestLocationUpdates(mRequest, mLocationCallback, null)
     }
 
-    private fun moveCamera(location: Location, animate: Boolean){
-        val cameraPosition = CameraPosition.Builder()
-            .target(LatLng(location.latitude, location.longitude)
-            ).zoom(LOCATION_ZOOM).build()
-
-        val cameraUpdate = CameraUpdateFactory
-            .newCameraPosition(cameraPosition)
-        if(animate){
-            mMap.animateCamera(cameraUpdate)
-        }else{
-            mMap.moveCamera(cameraUpdate)
-        }
+    private fun stopTracking() {
+        mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
     }
 
 
