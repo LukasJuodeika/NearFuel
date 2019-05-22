@@ -73,16 +73,29 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                val gasStationResponse  = it
+
+             val gasStationResponse  = it
                 Completable.fromAction {
                     gasStationDao.insertAllGasStations(gasStationResponse.data)
                 }.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                    }, {
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                        }, {
+                        Log.d("responseerror", it.message)
 
-                    })
+                        })
+//                for (station in 0 until gasStationResponse.data.size){
+//                    Completable.fromAction {
+//                        gasStationDao.insertGasStation(gasStationResponse.data[station])
+//                    }.subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
+//                        }, {
+//
+//                        })
+//                }
+
             },
                 {
+                    Log.d("responseerror", it.message)
 
                 }, {
 
@@ -94,7 +107,7 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
         gasStationDao.getAllGasStations()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Log.d("response", it.size.toString())
+               // Log.d("responseerror", it.size.toString())
                 listGasStationLiveData.value = it
 
             })

@@ -9,7 +9,7 @@ import com.ktu.components.objects.GasStation
     [
         GasStation::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 
 )
