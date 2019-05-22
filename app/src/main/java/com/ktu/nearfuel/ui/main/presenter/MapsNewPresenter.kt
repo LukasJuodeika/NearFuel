@@ -68,6 +68,7 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     fun getStationsFromAPI(latLng: LatLng){
         val location = latLng.latitude.toString() + "," + latLng.longitude.toString()
         disposable.add(apiInterface.getAllGasStations(
+            location
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

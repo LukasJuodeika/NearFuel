@@ -96,7 +96,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        dagger2Presenter.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
+       // dagger2Presenter.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
     }
 
     fun observeMarkersByGoogleLocation(){
@@ -175,7 +175,10 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
                 if (locationResult == null) {
                     return
                 }
+
                 mLastLocation = locationResult.lastLocation
+                dagger2Presenter.getStationsNearLocation(LatLng(mLastLocation.latitude,
+                    mLastLocation.longitude ));
                 presenter.onLocationResult()
             }
         }
