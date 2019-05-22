@@ -54,6 +54,12 @@ class SignUpPresenterTest {
         presenter.onSignUpClicked(email, password)
         Mockito.verify(mockView).displayBlankFieldError()
     }
+    @Test
+    fun onNavigationItemClicked_navigate(){
+        val id = 0
+        presenter.onNavigationItemClicked(id)
+        Mockito.verify(mockView).navigate(id)
+    }
     /*@Test
     fun onSignUpClicked_notEmpty_createAccount(){
         val email = "email"
@@ -62,10 +68,4 @@ class SignUpPresenterTest {
         Mockito.verify(presenter).createAccount(email, password)
         Mockito.verify(mockAuth).createUserWithEmailAndPassword(email, password).addOnCompleteListener {  }
     }*/
-    @Test
-    fun onNavigationItemClicked_navigate(){
-        val id = 0
-        presenter.onNavigationItemClicked(id)
-        Mockito.verify(mockView).navigate(id)
-    }
 }
