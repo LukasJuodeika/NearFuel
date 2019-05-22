@@ -3,9 +3,6 @@ package com.ktu.nearfuel.views.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.presenters.AuthenticationPresenter
 import com.ktu.nearfuel.R
 import com.ktu.components.contracts.AuthenticationContract
@@ -17,7 +14,6 @@ class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View,
 
     //Variables
     private lateinit var mPresenter : AuthenticationPresenter
-    //private var mIdlingResource = CountingIdlingResource()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
