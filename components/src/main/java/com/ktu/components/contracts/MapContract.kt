@@ -1,10 +1,12 @@
 package com.ktu.components.contracts
 
+import com.ktu.components.objects.GasStation
+
 interface MapContract
 {
     interface View
     {
-        fun openAddStationFragment()
+        fun openAddStationFragment(gasStation: GasStation?)
         fun lockDrawer()
         fun unlockDrawer()
         fun setMapSettings()

@@ -1,5 +1,6 @@
 package com.ktu.nearfuel.network
 
+import com.ktu.components.objects.GasStation
 import com.ktu.components.objects.NearestGasStation.NearestGasStationsJsonResponse
 import com.ktu.components.objects.jsonResponses.gasStationResponse.GasStationResponse
 import io.reactivex.Observable
@@ -25,8 +26,8 @@ interface APIInterface {
 
     @PUT("station")
     fun updateStation(
-        @Body gasStationRequest: String
-    ): Observable<ResponseBody>
+        @Body gasStationRequest: GasStation
+    ): Observable<GasStation>
 }
 
 

@@ -3,7 +3,7 @@ package com.ktu.nearfuel.network.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-data class GasStationRequestBody(
+class GasStationRequestBody(
     val address: String,
     val created_at: String,
     val diesel_price: String,

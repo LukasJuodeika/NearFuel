@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -142,8 +143,9 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     }
 
 
-    override fun openAddStationFragment() {
-        navController.navigate(R.id.action_mapFragment_to_addStationFragment)
+    override fun openAddStationFragment(gasStation: GasStation?) {
+        var bundle = bundleOf("amount" to gasStation)
+        navController.navigate(R.id.action_mapFragment_to_addStationFragment,  bundle)
     }
 
 
@@ -164,7 +166,9 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
             true }
         mMap.setInfoWindowAdapter(StationInfoWindowAdapter(context!!.applicationContext))
         mMap.setOnInfoWindowLongClickListener {
-            openAddStationFragment()
+            Log.d("testingTag", it.tag.toString())
+            var gasStation:GasStation = it.tag as GasStation;
+            openAddStationFragment(gasStation)
         }
     }
 

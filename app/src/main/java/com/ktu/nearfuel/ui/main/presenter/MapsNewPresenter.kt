@@ -11,14 +11,49 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
+import com.ktu.nearfuel.network.Resource
 import io.reactivex.Completable
+import okhttp3.ResponseBody
 
 
 class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     protected val disposable: CompositeDisposable,
     protected val apiInterface: APIInterface,
     protected val gasStationDao: GasStationDao
+
+
 ) : MapsNewContract<V> {
+    override fun getGasStationUpdateResult(): MutableLiveData<Resource<GasStation>> {
+       return updategasStationLivedata
+    }
+
+    val updategasStationLivedata =  MutableLiveData<Resource<GasStation>>()
+    override fun updateGasStation(gasStation: GasStation) {
+        gasStation.fuel_price = "shshhshshshs"
+        updategasStationLivedata.value = Resource.loading(null)
+        disposable.add(apiInterface.updateStation(
+            gasStation
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Completable.fromAction {
+                    gasStationDao.updateGasStation(gasStation)
+                }
+                updategasStationLivedata.value = Resource.success(it)
+                Log.d("responseerror", "updated")
+
+            },
+                {
+                    updategasStationLivedata.value = Resource.error("error", null)
+                    Log.d("responseerror", it.message)
+
+                }, {
+
+                }
+            ))
+    }
+
     override fun getGasStationsLivedata(): MutableLiveData<List<GasStation>> {
         return listGasStationLiveData
     }
@@ -29,42 +64,8 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
        // getStationsFromMapsAPI(latLng)
 
     }
-//    fun getStationsFromMapsAPI(latLng: LatLng){
-//        val location = latLng.latitude.toString() + "," + latLng.longitude.toString()
-//        disposable.add(apiInterface.getNearestGasStations(
-//            location,
-//            "distance",
-//            "gas_station",
-//            "AIzaSyCSXmOpvyXwUwosS07ROsqv0FLICbIYTBo"
-//        )
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({
-//                val gasStationsList: ArrayList<GasStation> = arrayListOf()
-//                for (e in it.results) {
-//                    val gasStation = GasStation()
-//                    gasStation.title = e.name
-//                    gasStation.lat = e.geometry.location.lat.toString()
-//                    gasStation.lng = e.geometry.location.lng.toString()
-//                    gasStationsList.add(gasStation)
-//                    Completable.fromAction {
-//                        gasStationDao.insertGasStation(gasStation)
-//                    }.subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
-//                        }, {
-//
-//                        })
-//                }
-//
-//                Log.d("response", it.toString())
-//            },
-//                {
-//
-//                }, {
-//
-//                }
-//            ))
-//    }
+
+
     fun getStationsFromAPI(latLng: LatLng){
         val location = latLng.latitude.toString() + "," + latLng.longitude.toString()
         disposable.add(apiInterface.getAllGasStations(
@@ -83,15 +84,6 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
                         Log.d("responseerror", it.message)
 
                         })
-//                for (station in 0 until gasStationResponse.data.size){
-//                    Completable.fromAction {
-//                        gasStationDao.insertGasStation(gasStationResponse.data[station])
-//                    }.subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
-//                        }, {
-//
-//                        })
-//                }
 
             },
                 {
