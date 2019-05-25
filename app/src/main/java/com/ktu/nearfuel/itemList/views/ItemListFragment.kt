@@ -1,11 +1,13 @@
 package com.ktu.nearfuel.itemList.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ktu.components.data.FuelType
 import com.ktu.nearfuel.itemList.contracts.ItemListContract
 import com.ktu.components.data.GasStationDao
 import com.ktu.components.objects.GasStation
@@ -15,16 +17,19 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.item_list_fragment.view.*
 import javax.inject.Inject
 
-class ItemListFragment : Fragment(), ItemListContract.View {
+class ItemListFragment private constructor() : Fragment(), ItemListContract.View {
 
-    lateinit var stationsDao: GasStationDao
     private lateinit var rootView: View
 
     @Inject
     lateinit var presenter: ItemListContract.Presenter
+
+    private lateinit var fuelType: FuelType
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidSupportInjection.inject(this)
+        fuelType = FuelType.valueOf(arguments!!.getString(FUEL_TYPE)!!)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,7 +44,7 @@ class ItemListFragment : Fragment(), ItemListContract.View {
         rootView.recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(list)
+            adapter = ListAdapter(list, FuelType.DIESEL)
         }
     }
 
@@ -52,5 +57,17 @@ class ItemListFragment : Fragment(), ItemListContract.View {
     override fun onDetach() {
         presenter.onDetach()
         super.onDetach()
+    }
+
+    companion object{
+        fun newInstance(type: FuelType) : ItemListFragment{
+            val args = Bundle()
+            args.putString(FUEL_TYPE,type.name)
+            val fragment = ItemListFragment()
+            fragment.arguments = args
+            return fragment
+        }
+
+        private const val FUEL_TYPE = "fuelType"
     }
 }
