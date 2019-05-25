@@ -1,4 +1,4 @@
-package com.ktu.nearfuel.views.fragments
+package com.ktu.nearfuel.maps.views
 
 import android.annotation.SuppressLint
 import android.location.Location
@@ -23,8 +23,7 @@ import kotlinx.android.synthetic.main.map_fragment.view.*
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.ktu.components.objects.GasStation
-import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
-import com.ktu.nearfuel.ui.main.view.MainMVPView
+import com.ktu.nearfuel.maps.contracts.MapsNewContract
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 import javax.inject.Named

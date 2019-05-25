@@ -3,7 +3,7 @@ package com.ktu.nearfuel.views
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.ktu.nearfuel.views.fragments.ItemListFragment
+import com.ktu.nearfuel.itemList.views.ItemListFragment
 
 
 class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

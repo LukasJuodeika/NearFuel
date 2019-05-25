@@ -1,7 +1,8 @@
 package com.ktu.nearfuel.di.builder
 
-import com.ktu.nearfuel.ui.main.MainActivityModule
-import com.ktu.nearfuel.ui.main.MapsFragmentProvider
+import com.ktu.nearfuel.itemList.di.ItemListFragmentProvider
+import com.ktu.nearfuel.views.activities.MainActivityModule
+import com.ktu.nearfuel.maps.di.MapsFragmentProvider
 import com.ktu.nearfuel.views.activities.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -10,7 +11,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(MainActivityModule::class),
-        (MapsFragmentProvider::class)])
+        (MapsFragmentProvider::class), (ItemListFragmentProvider::class)])
     abstract fun bindMainActivityActivity(): MainActivity
 
 

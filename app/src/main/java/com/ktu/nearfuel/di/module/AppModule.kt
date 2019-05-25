@@ -8,6 +8,8 @@ import com.ktu.components.data.GasStationDao
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import rx.Scheduler
+import rx.schedulers.Schedulers
 import javax.inject.Singleton
 
 
@@ -21,6 +23,14 @@ class AppModule {
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
+
+    @Provides
+    internal fun provideBackgroundScheduler(): Scheduler? = Schedulers.io()
+
+    @Provides
+    internal fun provideUIScheduler(): Scheduler? = Schedulers.io()
+
+
 
 
     @Provides

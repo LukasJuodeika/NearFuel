@@ -1,19 +1,19 @@
-package com.ktu.nearfuel.ui.main.presenter
+package com.ktu.nearfuel.maps.presenters
 
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.ktu.components.data.GasStationDao
 import com.ktu.components.objects.GasStation
 import com.ktu.nearfuel.network.APIInterface
-import com.ktu.nearfuel.ui.main.view.MainMVPView
+import com.ktu.nearfuel.maps.views.MainMVPView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
 import com.ktu.nearfuel.network.Resource
+import com.ktu.nearfuel.maps.contracts.MapsNewContract
 import io.reactivex.Completable
-import okhttp3.ResponseBody
 
 
 class MapsNewPresenter<V : MainMVPView> @Inject constructor(

@@ -1,4 +1,4 @@
-package com.ktu.nearfuel.views.fragments
+package com.ktu.nearfuel.itemList.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,30 +6,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ktu.components.contracts.ItemListContract
+import com.ktu.nearfuel.itemList.contracts.ItemListContract
 import com.ktu.components.data.GasStationDao
 import com.ktu.components.objects.GasStation
-import com.ktu.components.presenters.ItemListPresenter
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.components.ListAdapter
-import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.item_list_fragment.view.*
 import javax.inject.Inject
 
 class ItemListFragment : Fragment(), ItemListContract.View {
 
-    private lateinit var presenter: ItemListContract.Presenter
-    @Inject
     lateinit var stationsDao: GasStationDao
     private lateinit var rootView: View
+
+    @Inject
+    lateinit var presenter: ItemListContract.Presenter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AndroidSupportInjection.inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         rootView = inflater.inflate(R.layout.item_list_fragment, null)
-        presenter = ItemListPresenter(this, stationsDao, Schedulers.io(), AndroidSchedulers.mainThread())
         setUpRecyclerView(listOf())
+        presenter.loadListData()
         return rootView
     }
 

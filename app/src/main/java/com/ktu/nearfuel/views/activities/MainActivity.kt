@@ -19,8 +19,8 @@ import com.ktu.components.contracts.MainContract
 import com.ktu.components.objects.GasStation
 import com.ktu.components.presenters.MainPresenter
 import com.ktu.nearfuel.R
-import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
-import com.ktu.nearfuel.ui.main.view.MainMVPView
+import com.ktu.nearfuel.maps.contracts.MapsNewContract
+import com.ktu.nearfuel.maps.views.MainMVPView
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector

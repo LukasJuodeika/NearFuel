@@ -19,7 +19,7 @@
     </fragment>
     <fragment
             android:id="@+id/mapFragment"
-            android:name="com.ktu.nearfuel.views.fragments.MapFragment"
+            android:name="com.ktu.nearfuel.maps.views.MapFragment"
             android:label="@string/map"
             tools:layout = "@layout/map_fragment">
 

@@ -1,7 +1,7 @@
-package com.ktu.nearfuel.ui.main
+package com.ktu.nearfuel.maps.di
 
 import com.ktu.nearfuel.views.fragments.AddStationFragment
-import com.ktu.nearfuel.views.fragments.MapFragment
+import com.ktu.nearfuel.maps.views.MapFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

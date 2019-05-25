@@ -1,6 +1,7 @@
-package com.ktu.components.contracts
+package com.ktu.nearfuel.itemList.contracts
 
 import com.ktu.components.objects.GasStation
+import dagger.Provides
 
 interface ItemListContract {
 
