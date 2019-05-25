@@ -62,7 +62,6 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
         presenter = MapPresenter(this)
-        setClickListeners(rootView)
 
         return rootView
     }
@@ -115,14 +114,6 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         }
 
         dagger2Presenter.getGasStationsLivedata().observe(this, gasStations)
-    }
-
-
-    private fun setClickListeners(view: View)
-    {
-        view.add_gas_station.setOnClickListener {
-            presenter.addStationClicked()
-        }
     }
 
     private fun performDependencyInjection() = AndroidSupportInjection.inject(this)

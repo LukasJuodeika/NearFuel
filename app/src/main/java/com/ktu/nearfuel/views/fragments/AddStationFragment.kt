@@ -16,11 +16,12 @@ import com.ktu.components.contracts.AddStationContract
 import com.ktu.components.objects.GasStation
 import com.ktu.components.presenters.AddStationPresenter
 import com.ktu.nearfuel.R
-import com.ktu.nearfuel.network.Resource
-import com.ktu.nearfuel.network.Status
 import com.ktu.nearfuel.maps.contracts.MapsNewContract
 import com.ktu.nearfuel.maps.views.MainMVPView
+import com.ktu.nearfuel.network.Resource
+import com.ktu.nearfuel.network.Status
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.add_gas_station_constraint.view.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -28,22 +29,19 @@ class AddStationFragment : Fragment(), AddStationContract.View {
 
     private lateinit var presenter: AddStationContract.Presenter
 
-    lateinit var confirmButton :MaterialButton
-    lateinit var gasStationTextInputLayout : TextInputLayout
-    lateinit var fuelStationTextInputLayout : TextInputLayout
-    lateinit var dieselStationTextInputLayout : TextInputLayout
-    lateinit var mNavigation : NavController
+    lateinit var confirmButton: MaterialButton
+    lateinit var gasStationTextInputLayout: TextInputLayout
+    lateinit var fuelStationTextInputLayout: TextInputLayout
+    lateinit var dieselStationTextInputLayout: TextInputLayout
+    lateinit var mNavigation: NavController
 
     var updateStationObsever = Observer<Resource<GasStation>>
     {
-       if(it.status==Status.LOADING)
-       {
+        if (it.status == Status.LOADING) {
 
-       }
-        else if(it.status == Status.SUCCESS)
-        {
-           mNavigation.navigate(R.id.action_addStationFragment_to_mapFragment)
-           Toast.makeText(activity!!, "Updated successfully", Toast.LENGTH_LONG).show();
+        } else if (it.status == Status.SUCCESS) {
+            mNavigation.navigateUp()
+            Toast.makeText(activity!!, "Updated successfully", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -56,8 +54,11 @@ class AddStationFragment : Fragment(), AddStationContract.View {
         AndroidSupportInjection.inject(this)
         mNavigation = findNavController()
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.add_gas_station_constraint, container, false)
+        var station = arguments!!.getParcelable<GasStation>("amount")
+        loadDataToView(rootView, station)
 
         presenter = AddStationPresenter(this)
         confirmButton = rootView.findViewById(R.id.confirm_edit)
@@ -66,7 +67,6 @@ class AddStationFragment : Fragment(), AddStationContract.View {
         dieselStationTextInputLayout = rootView.findViewById(R.id.diasel_layout)
 
         dagger2Presenter.getGasStationUpdateResult().observe(this, updateStationObsever)
-        var station = arguments!!.getParcelable<GasStation>("amount")
 
         confirmButton.setOnClickListener {
 
@@ -80,5 +80,17 @@ class AddStationFragment : Fragment(), AddStationContract.View {
         }
 
         return rootView
+    }
+
+    private fun loadDataToView(view: View, station: GasStation?): Boolean {
+        if (station == null) {
+            return false
+        }
+        view.ti_title.editText!!.setText(station.title)
+        view.ti_address.editText!!.setText(station.address)
+        view.fuel_layout.editText!!.setText(station.fuel_price)
+        view.diasel_layout.editText!!.setText(station.diesel_price)
+        view.gas_layout.editText!!.setText(station.gas_price)
+        return true
     }
 }

@@ -7,10 +7,6 @@ class MapPresenter(val view: MapContract.View): MapContract.Presenter
 
     private var isOutOfFocus : Boolean = false
 
-    override fun addStationClicked() {
-        view.openAddStationFragment(null)
-    }
-
     override fun onResume() {
         view.unlockDrawer()
         isOutOfFocus = false

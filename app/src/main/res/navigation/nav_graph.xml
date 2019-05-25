@@ -8,7 +8,10 @@
             android:name="com.ktu.nearfuel.views.fragments.StationListFragment"
             android:label="@string/gas_stations"
             tools:layout="@layout/gas_station_list_view"
-    />
+    >
+        <action android:id="@+id/action_gasStationListFragment_to_addStationFragment"
+                app:destination="@id/addStationFragment"/>
+    </fragment>
     <fragment
             android:id="@+id/addStationFragment" android:name="com.ktu.nearfuel.views.fragments.AddStationFragment"
             android:label="@string/add_station"
