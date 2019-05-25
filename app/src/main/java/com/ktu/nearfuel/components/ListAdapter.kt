@@ -39,7 +39,7 @@ class ListAdapter(private var list: List<GasStation>, private val type: FuelType
         private fun setFuelPrice(item: GasStation, type: FuelType){
             when(type){
                 FuelType.DIESEL -> view.list_item_price.text = item.diesel_price
-                FuelType.PETROL -> view.list_item_price.text = item.fuelType
+                FuelType.PETROL -> view.list_item_price.text = item.fuel_price
                 FuelType.GAS -> view.list_item_price.text = item.gas_price
                 else -> view.list_item_price.text = "0"
             }

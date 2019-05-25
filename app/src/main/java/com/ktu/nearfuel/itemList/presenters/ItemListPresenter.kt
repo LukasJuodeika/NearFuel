@@ -1,7 +1,9 @@
 package com.ktu.nearfuel.itemList.presenters
 
+import com.ktu.components.data.FuelType
 import com.ktu.nearfuel.itemList.contracts.ItemListContract
 import com.ktu.components.data.GasStationDao
+import com.ktu.components.objects.GasStation
 import com.ktu.nearfuel.rx.SchedulersFacade
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -17,17 +19,30 @@ class ItemListPresenter
 
 
     private val disposables = CompositeDisposable()
+    private lateinit var dataList: ArrayList<GasStation>
 
     override fun loadListData() {
         disposables.add(
             stationsDao.getAllGasStations()
                 .subscribeOn(schedulersFacade.io())
                 .observeOn(schedulersFacade.ui())
-                .subscribe({ view.updateList(it) }, {})
+                .subscribe({
+                    view.updateList(it)
+                    dataList = it as ArrayList<GasStation>
+                }, {})
         )
     }
 
     override fun onDetach() {
         disposables.dispose()
+    }
+
+    override fun sortByPrice(fuelType: FuelType) {
+        when(fuelType){
+            FuelType.PETROL -> dataList.sortBy { it.fuel_price?.toDoubleOrNull() }
+            FuelType.DIESEL -> dataList.sortBy { it.diesel_price?.toDoubleOrNull() }
+            FuelType.GAS -> dataList.sortBy { it.gas_price?.toDoubleOrNull() }
+        }
+        view.updateList(dataList)
     }
 }

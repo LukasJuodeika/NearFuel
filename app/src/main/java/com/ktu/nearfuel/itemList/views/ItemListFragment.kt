@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ktu.components.data.FuelType
@@ -13,11 +14,12 @@ import com.ktu.components.data.GasStationDao
 import com.ktu.components.objects.GasStation
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.components.ListAdapter
+import com.ktu.nearfuel.itemList.contracts.Filter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.item_list_fragment.view.*
 import javax.inject.Inject
 
-class ItemListFragment private constructor() : Fragment(), ItemListContract.View {
+class ItemListFragment private constructor() : Fragment(), ItemListContract.View, Filter {
 
     private lateinit var rootView: View
 
@@ -57,6 +59,10 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
     override fun onDetach() {
         presenter.onDetach()
         super.onDetach()
+    }
+
+    override fun sortByPrice() {
+        presenter.sortByPrice(fuelType)
     }
 
     companion object{

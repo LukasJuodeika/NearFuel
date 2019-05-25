@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.ktu.components.contracts.StationListContract
 import com.ktu.components.presenters.StationListPresenter
 import com.ktu.nearfuel.R
+import com.ktu.nearfuel.itemList.contracts.Filter
+import com.ktu.nearfuel.itemList.views.ItemListFragment
 import com.ktu.nearfuel.views.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.gas_station_list_view.view.*
@@ -17,6 +20,7 @@ class StationListFragment : Fragment(), StationListContract.View
 {
     private lateinit var pagerAdapter: ViewPagerAdapter
     private lateinit var presenter: StationListContract.Presenter
+    private lateinit var currentPager: Filter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +33,22 @@ class StationListFragment : Fragment(), StationListContract.View
         return rootView
     }
 
-    private fun setupViewPager(view: View)
-    {
+    private fun setupViewPager(view: View) {
         pagerAdapter = ViewPagerAdapter(childFragmentManager)
         view.viewpager.adapter = pagerAdapter
         view.tablayout.setupWithViewPager(view.viewpager)
+
+        view.viewpager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener(){
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                currentPager = pagerAdapter.getItem(position) as ItemListFragment
+            }
+
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                currentPager = pagerAdapter.getItem(position) as ItemListFragment
+            }
+        })
     }
 
     override fun onAttach(context: Context) {
@@ -61,8 +76,7 @@ class StationListFragment : Fragment(), StationListContract.View
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.sort1 ->{
-                Toast.makeText(context, "Sort1", Toast.LENGTH_SHORT).show()
-                presenter.sort1()
+                currentPager.sortByPrice()
             }
             R.id.sort2 ->{
                 Toast.makeText(context, "Sort2", Toast.LENGTH_SHORT).show()

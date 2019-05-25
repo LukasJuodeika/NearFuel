@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.ktu.components.data.FuelType
 import com.ktu.nearfuel.itemList.views.ItemListFragment
+import java.lang.IndexOutOfBoundsException
 
 
 class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
@@ -12,14 +13,14 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     private val tabTitles = arrayOf("Petrol", "Diesel", "Gas")
 
+    private val items = arrayListOf(
+        ItemListFragment.newInstance(FuelType.PETROL),
+        ItemListFragment.newInstance(FuelType.DIESEL),
+        ItemListFragment.newInstance(FuelType.GAS))
 
 
     override fun getItem(position: Int): Fragment {
-        return when (position) {
-            0 -> ItemListFragment.newInstance(FuelType.PETROL)
-            1 -> ItemListFragment.newInstance(FuelType.DIESEL)
-            else -> ItemListFragment.newInstance(FuelType.GAS)
-        }
+        return items[position]
     }
 
     override fun getPageTitle(position: Int): CharSequence {
