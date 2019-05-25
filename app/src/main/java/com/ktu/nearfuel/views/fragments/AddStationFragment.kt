@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -19,8 +18,8 @@ import com.ktu.components.presenters.AddStationPresenter
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.network.Resource
 import com.ktu.nearfuel.network.Status
-import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
-import com.ktu.nearfuel.ui.main.view.MainMVPView
+import com.ktu.nearfuel.maps.contracts.MapsNewContract
+import com.ktu.nearfuel.maps.views.MainMVPView
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 import javax.inject.Named

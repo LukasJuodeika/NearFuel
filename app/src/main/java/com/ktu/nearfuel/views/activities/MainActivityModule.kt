@@ -1,7 +1,7 @@
-package com.ktu.nearfuel.ui.main
-import com.ktu.nearfuel.ui.main.presenter.MapsNewContract
-import com.ktu.nearfuel.ui.main.presenter.MapsNewPresenter
-import com.ktu.nearfuel.ui.main.view.MainMVPView
+package com.ktu.nearfuel.views.activities
+import com.ktu.nearfuel.maps.contracts.MapsNewContract
+import com.ktu.nearfuel.maps.presenters.MapsNewPresenter
+import com.ktu.nearfuel.maps.views.MainMVPView
 import dagger.Module
 import dagger.Provides
 

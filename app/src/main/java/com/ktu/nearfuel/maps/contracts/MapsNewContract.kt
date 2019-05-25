@@ -1,12 +1,10 @@
-package com.ktu.nearfuel.ui.main.presenter
+package com.ktu.nearfuel.maps.contracts
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ktu.components.objects.GasStation
 import com.ktu.nearfuel.network.Resource
-import com.ktu.nearfuel.ui.main.view.MainMVPView
+import com.ktu.nearfuel.maps.views.MainMVPView
 
 
 interface MapsNewContract<V : MainMVPView> {
