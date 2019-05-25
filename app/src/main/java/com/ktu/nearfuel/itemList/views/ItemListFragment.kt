@@ -14,12 +14,13 @@ import com.ktu.components.data.GasStationDao
 import com.ktu.components.objects.GasStation
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.components.ListAdapter
+import com.ktu.nearfuel.components.NavigationHandler
 import com.ktu.nearfuel.itemList.contracts.Filter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.item_list_fragment.view.*
 import javax.inject.Inject
 
-class ItemListFragment private constructor() : Fragment(), ItemListContract.View, Filter {
+class ItemListFragment private constructor() : Fragment(), ItemListContract.View, Filter, ListAdapter.OnListItemClickListener {
 
     private lateinit var rootView: View
 
@@ -46,7 +47,7 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
         rootView.recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(list, FuelType.DIESEL)
+            adapter = ListAdapter(list, FuelType.DIESEL, this@ItemListFragment)
         }
     }
 
@@ -71,6 +72,18 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
 
     override fun resetList() {
         presenter.loadListData()
+    }
+
+    override fun onItemClick(item: GasStation) {
+
+    }
+
+    override fun onItemLongClick(item: GasStation): Boolean {
+        return false
+    }
+
+    override fun onMapClick(item: GasStation) {
+        NavigationHandler.openNavigation(context!!, item.lng, item.lat)
     }
 
     companion object{
