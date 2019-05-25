@@ -4,8 +4,7 @@ import com.ktu.components.objects.GasStation
 
 interface MapContract
 {
-    interface View
-    {
+    interface View {
         fun openAddStationFragment(gasStation: GasStation?)
         fun lockDrawer()
         fun unlockDrawer()
@@ -15,7 +14,6 @@ interface MapContract
     }
 
     interface Presenter {
-        fun addStationClicked()
         fun onResume()
         fun onPause()
         fun onMapReady()
