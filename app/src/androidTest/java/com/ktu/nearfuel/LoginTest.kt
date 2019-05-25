@@ -1,5 +1,6 @@
 package com.ktu.nearfuel
 
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -54,6 +55,7 @@ class LoginTest {
             .perform(typeText("badlyformattedemail"))
         onView(withId(R.id.input_password)).perform(clearText())
             .perform(typeText("random"))
+        Espresso.pressBack()
         onView(withId(R.id.btn_login)).perform(click())
         onView(withText("The email address is badly formatted.")).
             inRoot(withDecorView(not(activity.window.decorView)))
@@ -66,6 +68,7 @@ class LoginTest {
             .perform(typeText(email))
         onView(withId(R.id.input_password)).perform(clearText())
             .perform(typeText("random"))
+        Espresso.pressBack()
         onView(withId(R.id.btn_login)).perform(click())
         onView(withText("The password is invalid or the user does not have a password.")).
             inRoot(withDecorView(not(activity.window.decorView)))
