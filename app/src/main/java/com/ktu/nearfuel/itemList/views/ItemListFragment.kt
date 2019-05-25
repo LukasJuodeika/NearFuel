@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ktu.components.data.FuelType
 import com.ktu.nearfuel.itemList.contracts.ItemListContract
@@ -79,7 +80,10 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
     }
 
     override fun onItemLongClick(item: GasStation): Boolean {
-        return false
+        val args = Bundle()
+        args.putParcelable("amount",item)
+        findNavController().navigate(R.id.action_gasStationListFragment_to_addStationFragment, args)
+        return true
     }
 
     override fun onMapClick(item: GasStation) {
