@@ -39,7 +39,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-            android:id="@+id/fab_qibla"
+            android:id="@+id/confirm_edit"
             style="@style/Widget.PrayerTimes.FABlikeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

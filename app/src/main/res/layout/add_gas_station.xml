@@ -14,7 +14,7 @@
     />
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:hint="Enter the title"
+              android:hint="Title"
               android:id="@+id/et_station_title"
 
     />
@@ -27,7 +27,7 @@
     />
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:hint="Enter the address"
+              android:hint="Address"
               android:id="@+id/et_station_address"
 
     />

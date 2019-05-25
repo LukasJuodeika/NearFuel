@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.ktu.components.objects.GasStation
+import com.ktu.nearfuel.network.Resource
 import com.ktu.nearfuel.ui.main.view.MainMVPView
 
 
@@ -12,5 +13,7 @@ interface MapsNewContract<V : MainMVPView> {
 
     fun getStationsNearLocation(latLng:LatLng)
     fun getGasStationsLivedata(): MutableLiveData<List<GasStation>>
+    fun getGasStationUpdateResult(): MutableLiveData<Resource<GasStation>>
+    fun updateGasStation(gasStation: GasStation)
 
 }

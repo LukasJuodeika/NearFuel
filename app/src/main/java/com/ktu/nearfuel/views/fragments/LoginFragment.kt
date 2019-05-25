@@ -84,7 +84,7 @@ class LoginFragment: Fragment(), LoginContract.View {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun displayBlankFieldsError() {
+    override fun displayBlankFieldError() {
         Toast.makeText(activity, getString(R.string.blank_fields), Toast.LENGTH_SHORT).show()
     }
 

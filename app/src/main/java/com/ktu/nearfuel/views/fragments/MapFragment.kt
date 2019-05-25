@@ -1,16 +1,19 @@
 package com.ktu.nearfuel.views.fragments
 
 import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.ktu.components.contracts.MapContract
@@ -25,24 +28,16 @@ import com.ktu.nearfuel.ui.main.view.MainMVPView
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 import javax.inject.Named
-import android.R
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
-
-
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CameraPosition
+import com.ktu.nearfuel.R
+import com.ktu.nearfuel.views.StationInfoWindowAdapter
 
 
 class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 {
-
-    @SuppressLint("MissingPermission")
-    override fun onMapReady(mMap: GoogleMap) {
-        this.mMap = mMap
-        mMap.uiSettings.isMyLocationButtonEnabled = false
-        observeMarkersByGoogleLocation()
-
-    }
-
 
     private lateinit var presenter: MapContract.Presenter
 
@@ -54,80 +49,38 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     private lateinit var rootView: View
     private lateinit var mapView: MapView
     private lateinit var mMap: GoogleMap
+    //Location
+    private lateinit var mRequest: LocationRequest
+    private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var mLocationCallback: LocationCallback
+    private lateinit var mLastLocation : Location
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(com.ktu.nearfuel.R.layout.map_fragment, container, false)
-
+        val rootView = inflater.inflate(R.layout.map_fragment, container, false)
 
         this.rootView = rootView
-        mapView = rootView.findViewById(com.ktu.nearfuel.R.id.map_view) as MapView
+        mapView = rootView.findViewById(R.id.map_view) as MapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
         presenter = MapPresenter(this)
         setClickListeners(rootView)
 
-
         return rootView
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
+        stopTracking()
         mapView.onDestroy()
     }
-      
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        dagger2Presenter.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
-    }
-
-    fun observeMarkersByGoogleLocation(){
-        val gasStations = Observer<List<GasStation>> { gasStations ->
-
-            for ( station in gasStations)
-            {
-                mMap.addMarker(
-                    MarkerOptions()
-                        .position(LatLng(station.lat.toDouble(), station.lng.toDouble()))
-                        .title(station.title)
-                        .snippet(station.address)
-                      //  .icon(BitmapDescriptorFactory.fromResource(R.drawable.btn_plus))
-                )
-            }
-            Log.d("responsegood", gasStations.size.toString())
-        }
-
-        dagger2Presenter.getGasStationsLivedata().observe(this, gasStations)
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidSupportInjection.inject(this)
-    }
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
     }
-
-    private fun setClickListeners(view: View)
-    {
-        view.add_gas_station.setOnClickListener {
-            presenter.addStationClicked()
-        }
-    }
-
-    private fun performDependencyInjection() = AndroidSupportInjection.inject(this)
-
-
-    override fun openAddStationFragment() {
-        navController.navigate(com.ktu.nearfuel.R.id.action_mapFragment_to_addStationFragment)
-    }
-
 
     override fun onResume() {
         super.onResume()
@@ -141,6 +94,109 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         presenter.onPause()
         mapView.onPause()
     }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+       // dagger2Presenter.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
+    }
+
+    fun observeMarkersByGoogleLocation(){
+        val gasStations = Observer<List<GasStation>> { gasStations ->
+
+            for ( station in gasStations)
+            {
+                val marker = mMap.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(station.lat.toDouble(), station.lng.toDouble()))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.station_marker))
+                )
+                marker.tag = station
+            }
+            Log.d("responsegood", gasStations.size.toString())
+        }
+
+        dagger2Presenter.getGasStationsLivedata().observe(this, gasStations)
+    }
+
+
+    private fun setClickListeners(view: View)
+    {
+        view.add_gas_station.setOnClickListener {
+            presenter.addStationClicked()
+        }
+    }
+
+    private fun performDependencyInjection() = AndroidSupportInjection.inject(this)
+
+    override fun moveCamera(animate: Boolean){
+        val cameraPosition = CameraPosition.Builder()
+            .target(LatLng(mLastLocation.latitude, mLastLocation.longitude)
+            ).zoom(LOCATION_ZOOM).build()
+
+        val cameraUpdate = CameraUpdateFactory
+            .newCameraPosition(cameraPosition)
+        if(animate){
+            mMap.animateCamera(cameraUpdate)
+        }else{
+            mMap.moveCamera(cameraUpdate)
+        }
+    }
+
+
+    override fun openAddStationFragment(gasStation: GasStation?) {
+        var bundle = bundleOf("amount" to gasStation)
+        navController.navigate(R.id.action_mapFragment_to_addStationFragment,  bundle)
+    }
+
+
+    override fun onMapReady(mMap: GoogleMap) {
+        this.mMap = mMap
+        presenter.onMapReady()
+        observeMarkersByGoogleLocation()
+
+    }
+    @SuppressLint("MissingPermission")
+    override fun setMapSettings(){
+        mMap.uiSettings.isMyLocationButtonEnabled = true
+        mMap.isMyLocationEnabled = true
+        mMap.setOnCameraMoveListener { presenter.setFocus(true) }
+        mMap.setOnMyLocationButtonClickListener {
+            presenter.setFocus(false)
+            moveCamera(true)
+            true }
+        mMap.setInfoWindowAdapter(StationInfoWindowAdapter(context!!.applicationContext))
+        mMap.setOnInfoWindowLongClickListener {
+            Log.d("testingTag", it.tag.toString())
+            var gasStation:GasStation = it.tag as GasStation;
+            openAddStationFragment(gasStation)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun startTracking() {
+        mLocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                if (locationResult == null) {
+                    return
+                }
+
+                mLastLocation = locationResult.lastLocation
+                dagger2Presenter.getStationsNearLocation(LatLng(mLastLocation.latitude,
+                    mLastLocation.longitude ));
+                presenter.onLocationResult()
+            }
+        }
+        mRequest = LocationRequest.create()
+        mRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mRequest.interval = LOCATION_INTERVAL
+        mRequest.fastestInterval = LOCATION_INTERVAL
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
+        mFusedLocationProviderClient.requestLocationUpdates(mRequest, mLocationCallback, null)
+    }
+
+    private fun stopTracking() {
+        mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
+    }
 
 
     override fun lockDrawer() {
@@ -151,5 +207,9 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         activity!!.drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
+    companion object{
+        private const val LOCATION_INTERVAL = 1000_000L
+        private const val LOCATION_ZOOM = 16f
+    }
 
 }

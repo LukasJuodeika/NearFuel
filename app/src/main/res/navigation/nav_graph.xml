@@ -12,7 +12,11 @@
     <fragment
             android:id="@+id/addStationFragment" android:name="com.ktu.nearfuel.views.fragments.AddStationFragment"
             android:label="@string/add_station"
-            tools:layout="@layout/add_gas_station_constraint"/>
+            tools:layout="@layout/add_gas_station_constraint">
+        <argument android:name="gasStation" app:argType="com.ktu.components.objects.GasStation" app:nullable="true"
+                  android:defaultValue="@null"/>
+        <action android:id="@+id/action_addStationFragment_to_mapFragment" app:destination="@id/mapFragment"/>
+    </fragment>
     <fragment
             android:id="@+id/mapFragment"
             android:name="com.ktu.nearfuel.views.fragments.MapFragment"
@@ -20,7 +24,8 @@
             tools:layout = "@layout/map_fragment">
 
         <action android:id="@+id/action_mapFragment_to_addStationFragment"
-                app:destination="@id/addStationFragment"/>
+                app:destination="@id/addStationFragment">
+        </action>
 
         <action android:id="@+id/action_mapFragment_to_gasStationListFragment"
                 app:destination="@id/gasStationListFragment"/>

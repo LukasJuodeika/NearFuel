@@ -1,5 +1,6 @@
 package com.ktu.nearfuel.ui.main
 
+import com.ktu.nearfuel.views.fragments.AddStationFragment
 import com.ktu.nearfuel.views.fragments.MapFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -10,4 +11,7 @@ abstract class MapsFragmentProvider{
 
     @ContributesAndroidInjector(modules = [MapsFragmentModule::class])
     internal abstract fun provideMapsFragment() : MapFragment
+
+    @ContributesAndroidInjector(modules = [MapsFragmentModule::class])
+    internal abstract fun provideMapsFragment1() : AddStationFragment
 }
