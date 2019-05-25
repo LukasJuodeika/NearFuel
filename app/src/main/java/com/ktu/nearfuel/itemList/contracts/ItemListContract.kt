@@ -14,5 +14,6 @@ interface ItemListContract {
         fun loadListData()
         fun onDetach()
         fun sortByPrice(fuelType: FuelType)
+        fun filterUnknown(fuelType: FuelType)
     }
 }

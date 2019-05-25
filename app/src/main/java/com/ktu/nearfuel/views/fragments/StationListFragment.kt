@@ -79,16 +79,10 @@ class StationListFragment : Fragment(), StationListContract.View
                 currentPager.sortByPrice()
             }
             R.id.sort2 ->{
-                Toast.makeText(context, "Sort2", Toast.LENGTH_SHORT).show()
-                presenter.sort2()
+                currentPager.filterUnknown()
             }
             R.id.sort3 ->{
-                Toast.makeText(context, "Sort3", Toast.LENGTH_SHORT).show()
-                presenter.sort3()
-            }
-            R.id.sort4 ->{
-                Toast.makeText(context, "Sort4", Toast.LENGTH_SHORT).show()
-                presenter.sort4()
+                currentPager.resetList()
             }
             else ->
                 return super.onOptionsItemSelected(item)

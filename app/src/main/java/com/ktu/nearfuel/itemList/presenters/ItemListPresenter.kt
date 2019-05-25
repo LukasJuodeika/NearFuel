@@ -45,4 +45,13 @@ class ItemListPresenter
         }
         view.updateList(dataList)
     }
+
+    override fun filterUnknown(fuelType: FuelType) {
+        dataList = when(fuelType){
+            FuelType.PETROL -> dataList.filter { it.fuel_price != null} as ArrayList<GasStation>
+            FuelType.DIESEL -> dataList.filter { it.diesel_price != null } as ArrayList<GasStation>
+            FuelType.GAS -> dataList.filter { it.gas_price != null} as ArrayList<GasStation>
+        }
+        view.updateList(dataList)
+    }
 }

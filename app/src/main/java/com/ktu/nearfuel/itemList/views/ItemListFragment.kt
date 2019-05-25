@@ -65,6 +65,14 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
         presenter.sortByPrice(fuelType)
     }
 
+    override fun filterUnknown() {
+        presenter.filterUnknown(fuelType)
+    }
+
+    override fun resetList() {
+        presenter.loadListData()
+    }
+
     companion object{
         fun newInstance(type: FuelType) : ItemListFragment{
             val args = Bundle()
