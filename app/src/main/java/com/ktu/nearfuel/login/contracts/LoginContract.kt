@@ -1,4 +1,4 @@
-package com.ktu.components.contracts
+package com.ktu.nearfuel.login.contracts
 
 interface LoginContract {
     interface View{

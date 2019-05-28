@@ -1,8 +1,8 @@
 package com.ktu.nearfuel
 
 import com.google.firebase.auth.FirebaseAuth
-import com.ktu.components.contracts.LoginContract
-import com.ktu.components.presenters.LoginPresenter
+import com.ktu.nearfuel.login.contracts.LoginContract
+import com.ktu.nearfuel.login.presenters.LoginPresenter
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,9 +1,20 @@
-package com.ktu.components.presenters
+package com.ktu.nearfuel.login.presenters
 
 import com.google.firebase.auth.FirebaseAuth
-import com.ktu.components.contracts.LoginContract
+import com.ktu.components.data.GasStationDao
+import com.ktu.nearfuel.itemList.contracts.ItemListContract
+import com.ktu.nearfuel.login.contracts.LoginContract
+import com.ktu.nearfuel.network.APIInterface
+import com.ktu.nearfuel.rx.SchedulersFacade
+import javax.inject.Inject
 
-class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAuth) : LoginContract.Presenter {
+class LoginPresenter    @Inject constructor(
+    private val view: LoginContract.View,
+    private val schedulersFacade: SchedulersFacade,
+    val mAuth: FirebaseAuth,
+    val apiInterface: APIInterface
+) :
+    LoginContract.Presenter {
 
     override fun onLoginClicked(email: String, password: String) {
         if (email.isNotBlank() && password.isNotBlank()){
@@ -17,6 +28,13 @@ class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAu
     override fun onNavigationItemClicked(id: Int) {
         view.navigate(id)
     }
+
+    fun loginUser(uid:String)
+    {
+
+    }
+
+
 
     private fun authenticate(email : String, password : String){
         mAuth.signInWithEmailAndPassword(email, password)

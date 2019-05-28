@@ -5,10 +5,7 @@ import com.ktu.components.objects.NearestGasStation.NearestGasStationsJsonRespon
 import com.ktu.components.objects.jsonResponses.gasStationResponse.GasStationResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface APIInterface {
     @GET("place/nearbysearch/json")
@@ -27,9 +24,15 @@ interface APIInterface {
 
     @PUT("station")
     fun updateStation(
-        @Body gasStationRequest: GasStation,
-        @Body uid:String
+        @Part gasStationRequest: GasStation,
+        @Part uid:String
     ): Observable<GasStation>
+
+    @POST("user")
+    fun loginUser(
+        @Part email: String,
+        @Part uid:String
+    ): Observable<ResponseBody>
 }
 
 
