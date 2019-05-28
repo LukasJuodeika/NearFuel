@@ -1,11 +1,19 @@
 package com.ktu.nearfuel.login.presenters
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.data.GasStationDao
+import com.ktu.components.objects.GasStation
 import com.ktu.nearfuel.itemList.contracts.ItemListContract
 import com.ktu.nearfuel.login.contracts.LoginContract
 import com.ktu.nearfuel.network.APIInterface
+import com.ktu.nearfuel.network.Resource
+import com.ktu.nearfuel.network.models.LoginRequestBody
 import com.ktu.nearfuel.rx.SchedulersFacade
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class LoginPresenter    @Inject constructor(
@@ -15,6 +23,8 @@ class LoginPresenter    @Inject constructor(
     val apiInterface: APIInterface
 ) :
     LoginContract.Presenter {
+
+    private val disposables = CompositeDisposable()
 
     override fun onLoginClicked(email: String, password: String) {
         if (email.isNotBlank() && password.isNotBlank()){
@@ -29,8 +39,23 @@ class LoginPresenter    @Inject constructor(
         view.navigate(id)
     }
 
-    fun loginUser(uid:String)
+    fun loginUserAPI(email: String, uid:String)
     {
+        disposables.add(apiInterface.loginUser(
+           LoginRequestBody(email, uid))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+               view.login()
+
+            },
+                {
+                    Log.d("responseerror", it.message)
+
+                }, {
+
+                }
+            ))
 
     }
 
@@ -42,7 +67,7 @@ class LoginPresenter    @Inject constructor(
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
                     if(user != null && user.isEmailVerified)
-                        view.login()
+                       loginUserAPI(email, user.uid )
                     else{
                         view.displayEmailVerificationError()
                         view.hideProgress()

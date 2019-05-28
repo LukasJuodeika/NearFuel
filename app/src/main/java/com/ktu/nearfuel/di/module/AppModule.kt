@@ -37,7 +37,7 @@ class AppModule {
     @Provides
     @Singleton
     internal fun provideAppDatabase(context: Context): Database =
-        Room.databaseBuilder(context, Database::class.java, "db").build()
+        Room.databaseBuilder(context, Database::class.java, "nearFuel").build()
 
     @Provides
     @Singleton
