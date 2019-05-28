@@ -2,18 +2,22 @@ package com.ktu.nearfuel.network.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ktu.components.objects.GasStation
 
 class GasStationRequestBody(
-    val address: String,
-    val created_at: String,
-    val diesel_price: String,
-    val fuelType: String,
-    val fuel_price: String,
-    val gas_price: String,
-    val lat: String,
+    var address: String?,
+    var created_at: String?,
+    var diesel_price: String?,
+    var fuelType: String?,
+    var fuel_price: String?,
+    var gas_price: String?,
+    var lat: String,
     val lng: String,
-    val station_id: Int,
-    val title: String,
-    val updated_at: String,
-    val user_id: Int
-)
+    val station_id: Int?,
+    val title: String?,
+    val updated_at: String?,
+    val user_id: Int?,
+    val uid: String
+) {
+
+}

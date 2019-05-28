@@ -1,7 +1,7 @@
 package com.ktu.components.presenters
 
-import com.ktu.components.contracts.SignUpContract
 import com.google.firebase.auth.FirebaseAuth
+import com.ktu.components.contracts.SignUpContract
 
 class SignUpPresenter(val view: SignUpContract.View, private val mAuth : FirebaseAuth): SignUpContract.Presenter {
 

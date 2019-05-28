@@ -10,5 +10,5 @@ import dagger.Module
 abstract class ItemListViewModule {
 
     @Binds
-    internal abstract fun provideLobbyView(lobbyActivity: ItemListFragment): ItemListContract.View
+    internal abstract fun provideItemListview(itemListFragment: ItemListFragment): ItemListContract.View
 }

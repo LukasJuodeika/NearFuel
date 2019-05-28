@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.ktu.nearfuel.network.Resource
 import com.ktu.nearfuel.maps.contracts.MapsNewContract
+import com.ktu.nearfuel.network.models.GasStationRequestBody
 import io.reactivex.Completable
 
 
@@ -32,7 +33,13 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     override fun updateGasStation(gasStation: GasStation) {
         updategasStationLivedata.value = Resource.loading(null)
         disposable.add(apiInterface.updateStation(
-            gasStation, FirebaseAuth.getInstance().currentUser!!.uid
+
+            GasStationRequestBody(gasStation.address,
+                gasStation.created_at, gasStation.diesel_price, gasStation.fuelType,
+                gasStation.fuel_price, gasStation.gas_price, gasStation.lat, gasStation.lng,gasStation.station_id, gasStation.title,
+                gasStation.created_at,
+                gasStation.user_id,  FirebaseAuth.getInstance().currentUser!!.uid)
+
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -101,10 +108,9 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     }
 
     fun startObservingStationsFromDao() {
-        gasStationDao.getAllGasStations()
+        disposable.add(gasStationDao.getAllGasStations()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-               // Log.d("responseerror", it.size.toString())
+            .subscribe {
                 listGasStationLiveData.value = it
 
             })

@@ -1,4 +1,4 @@
-package com.ktu.nearfuel.views.fragments
+package com.ktu.nearfuel.login.views
 
 import android.content.Context
 import android.os.Bundle
@@ -11,17 +11,22 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.ktu.components.contracts.LoginContract
-import com.ktu.components.presenters.LoginPresenter
+import com.ktu.components.data.FuelType
 import com.ktu.nearfuel.R
+import com.ktu.nearfuel.itemList.contracts.ItemListContract
+import com.ktu.nearfuel.itemList.views.ItemListFragment
+import com.ktu.nearfuel.login.contracts.LoginContract
+import com.ktu.nearfuel.login.presenters.LoginPresenter
+import dagger.android.support.AndroidSupportInjection
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import java.lang.ClassCastException
+import javax.inject.Inject
 
 
 class LoginFragment: Fragment(), LoginContract.View {
 
     //Variables
-    private lateinit var mPresenter: LoginPresenter
     private lateinit var mNavigation : NavController
     private lateinit var mAuth : FirebaseAuth
     private lateinit var mCallback: OnLoginListener//Callback for finishing the activity
@@ -29,15 +34,23 @@ class LoginFragment: Fragment(), LoginContract.View {
     //UI
     private lateinit var mProgressBar : ProgressBar
 
+    @Inject
+    lateinit var presenter: LoginContract.Presenter
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         mAuth = FirebaseAuth.getInstance()
-        mPresenter = LoginPresenter(this, mAuth)
         mNavigation = findNavController()
         setLayouts(view)
         setClickListeners(view)
         return view
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AndroidSupportInjection.inject(this)
+    }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,12 +68,12 @@ class LoginFragment: Fragment(), LoginContract.View {
 
     private fun setClickListeners(view: View){
         view.link_sign_up.setOnClickListener{
-            mPresenter.onNavigationItemClicked(R.id.action_loginFragment_to_signUpFragment)
+            presenter.onNavigationItemClicked(R.id.action_loginFragment_to_signUpFragment)
         }
         view.btn_login.setOnClickListener {
             val email = view.input_email.text.toString()
             val password = view.input_password.text.toString()
-            mPresenter.onLoginClicked(email, password)
+            presenter.onLoginClicked(email, password)
         }
     }
 

@@ -21,6 +21,7 @@ import com.ktu.nearfuel.maps.views.MainMVPView
 import com.ktu.nearfuel.network.Resource
 import com.ktu.nearfuel.network.Status
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.edit_station_prices.*
 import kotlinx.android.synthetic.main.edit_station_prices.view.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -71,10 +72,10 @@ class EditStationFragment : Fragment(), EditStationContract.View {
         confirmButton.setOnClickListener {
 
             if(station != null && validate(rootView)){
-                /*station.fuel_price = edit_petrol.text.toString()
+                station.fuel_price = edit_petrol.text.toString()
                 station.gas_price = edit_gas.text.toString()
                 station.diesel_price = edit_diesel.text.toString()
-                dagger2Presenter.updateGasStation(station)*/
+                dagger2Presenter.updateGasStation(station)
             }
             Log.d("response", arguments!!.getParcelable<GasStation>("amount").toString());
 
