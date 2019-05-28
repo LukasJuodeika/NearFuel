@@ -1,14 +1,12 @@
 package com.ktu.components.contracts
 
-interface AddStationContract
+interface EditStationContract
 {
     interface View
     {
-
     }
 
     interface Presenter
     {
-
     }
 }

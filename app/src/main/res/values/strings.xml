@@ -24,4 +24,6 @@
     <string name="iw_gas">Gas: %1$s</string>
     <string name="iw_petrol">Petrol: %1$s</string>
     <string name="iw_diesel">Diesel: %1$s</string>
+    <string name="empty_error">Empty</string>
+    <string name="bad_price_error">Bad price</string>
 </resources>

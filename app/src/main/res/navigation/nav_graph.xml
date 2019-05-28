@@ -13,9 +13,9 @@
                 app:destination="@id/addStationFragment"/>
     </fragment>
     <fragment
-            android:id="@+id/addStationFragment" android:name="com.ktu.nearfuel.views.fragments.AddStationFragment"
+            android:id="@+id/addStationFragment" android:name="com.ktu.nearfuel.views.fragments.EditStationFragment"
             android:label="@string/add_station"
-            tools:layout="@layout/add_gas_station_constraint">
+            tools:layout="@layout/edit_station_prices">
         <argument android:name="gasStation" app:argType="com.ktu.components.objects.GasStation" app:nullable="true"
                   android:defaultValue="@null"/>
         <action android:id="@+id/action_addStationFragment_to_mapFragment" app:destination="@id/mapFragment"/>
