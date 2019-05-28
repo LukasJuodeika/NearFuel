@@ -20,7 +20,4 @@
     <string name="sign_up">Sign up</string>
     <string name="auth_failed">Authentication failed.</string>
     <string name="blank_fields">All fields must be filled in.</string>
-    <!--For facebook-->
-    <string name="facebook_app_id">324381454920722</string>
-    <string name="fb_login_protocol_scheme">fb324381454920722</string>
 </resources>

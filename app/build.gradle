@@ -90,8 +90,6 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-auth:17.0.0'
-    //Facebook login only
-    implementation 'com.facebook.android:facebook-login:4.33.0'
     //Location
     implementation "com.google.android.gms:play-services-location:16.0.0"
     //Mockito
