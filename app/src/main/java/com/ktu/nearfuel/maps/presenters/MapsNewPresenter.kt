@@ -33,7 +33,12 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     override fun updateGasStation(gasStation: GasStation) {
         updategasStationLivedata.value = Resource.loading(null)
         disposable.add(apiInterface.updateStation(
-            GasStationRequestBody(gasStation, FirebaseAuth.getInstance().currentUser!!.uid)
+
+            GasStationRequestBody(gasStation.address,
+                gasStation.created_at, gasStation.diesel_price, gasStation.fuelType,
+                gasStation.fuel_price, gasStation.gas_price, gasStation.lat, gasStation.lng,gasStation.station_id, gasStation.title,
+                gasStation.created_at,
+                gasStation.user_id,  FirebaseAuth.getInstance().currentUser!!.uid)
 
         )
             .subscribeOn(Schedulers.io())
