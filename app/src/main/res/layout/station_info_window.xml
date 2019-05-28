@@ -48,4 +48,12 @@ android:padding="8dp">
             android:textSize="14sp"
             android:ellipsize="end"/>
 
+    <TextView
+            android:id="@+id/iw_updated_at"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="14sp"
+            android:ellipsize="end"/>
+
 </LinearLayout>

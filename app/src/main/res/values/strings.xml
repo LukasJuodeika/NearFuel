@@ -20,4 +20,8 @@
     <string name="sign_up">Sign up</string>
     <string name="auth_failed">Authentication failed.</string>
     <string name="blank_fields">All fields must be filled in.</string>
+    <string name="iw_updated_at">Updated at: %1$s</string>
+    <string name="iw_gas">Gas: %1$s</string>
+    <string name="iw_petrol">Petrol: %1$s</string>
+    <string name="iw_diesel">Diesel: %1$s</string>
 </resources>
