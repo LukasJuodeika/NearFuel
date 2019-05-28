@@ -11,6 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 import com.ktu.nearfuel.network.Resource
 import com.ktu.nearfuel.maps.contracts.MapsNewContract
 import io.reactivex.Completable
@@ -29,17 +30,21 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
 
     val updategasStationLivedata =  MutableLiveData<Resource<GasStation>>()
     override fun updateGasStation(gasStation: GasStation) {
-        gasStation.fuel_price = "shshhshshshs"
         updategasStationLivedata.value = Resource.loading(null)
         disposable.add(apiInterface.updateStation(
-            gasStation
+            gasStation, FirebaseAuth.getInstance().currentUser!!.uid
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Completable.fromAction {
-                    gasStationDao.updateGasStation(gasStation)
-                }
+                    gasStationDao.insertGasStation(gasStation)
+                }.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    }, {
+                        Log.d("responseerror", it.message)
+
+                    })
                 updategasStationLivedata.value = Resource.success(it)
                 Log.d("responseerror", "updated")
 
@@ -69,7 +74,7 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     fun getStationsFromAPI(latLng: LatLng){
         val location = latLng.latitude.toString() + "," + latLng.longitude.toString()
         disposable.add(apiInterface.getAllGasStations(
-            location
+            location, FirebaseAuth.getInstance().currentUser!!.uid
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

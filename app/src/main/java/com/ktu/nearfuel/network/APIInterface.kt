@@ -21,12 +21,14 @@ interface APIInterface {
 
     @GET("stations")
     fun getAllGasStations(
-        @Query("location") location: String
+        @Query("location") location: String,
+        @Query("uid") uid: String
     ): Observable<GasStationResponse>
 
     @PUT("station")
     fun updateStation(
-        @Body gasStationRequest: GasStation
+        @Body gasStationRequest: GasStation,
+        @Body uid:String
     ): Observable<GasStation>
 }
 
