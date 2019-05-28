@@ -92,6 +92,10 @@ class LoginFragment: Fragment(), LoginContract.View {
         Toast.makeText(activity, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show()
     }
 
+    override fun displayEmailVerificationError() {
+        Toast.makeText(activity, getString(R.string.email_verification_error), Toast.LENGTH_LONG).show()
+    }
+
     interface OnLoginListener{
         fun onLogin()
     }

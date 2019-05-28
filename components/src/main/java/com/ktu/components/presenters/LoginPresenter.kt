@@ -22,7 +22,13 @@ class LoginPresenter(val view: LoginContract.View, private val mAuth: FirebaseAu
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    view.login()
+                    val user = mAuth.currentUser
+                    if(user != null && user.isEmailVerified)
+                        view.login()
+                    else{
+                        view.displayEmailVerificationError()
+                        view.hideProgress()
+                    }
                 } else {
                     val exception = task.exception
                     val errorCode : String

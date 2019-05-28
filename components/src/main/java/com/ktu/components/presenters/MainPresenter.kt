@@ -20,7 +20,7 @@ class MainPresenter(val view: MainContract.View, private val mAuth: FirebaseAuth
 
     private fun checkUser(){
         val currentUser = mAuth.currentUser
-        if(currentUser == null){
+        if(currentUser == null || !currentUser.isEmailVerified){
             view.signOut()
         }else{
             view.displayEmail(currentUser.email.toString())

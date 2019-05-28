@@ -51,14 +51,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mAuth = FirebaseAuth.getInstance()
         presenter = MainPresenter(this, mAuth)
         presenter.onCreate()
-        presenter1.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
-        val gasStations = Observer<List<GasStation>> { gasStations ->
-
-            Log.d("responsegood", gasStations.size.toString())
-        }
-
-        presenter1.getGasStationsLivedata().observe(this, gasStations)
-
         setupNavigation()
     }
 

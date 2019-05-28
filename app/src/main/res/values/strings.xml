@@ -5,7 +5,7 @@
     <string name="gas">Gas</string>
     <string name="gas_stations">Gas stations</string>
     <string name="map">Map</string>
-    <string name="add_station">Add station</string>
+    <string name="edit_station">Edit station</string>
     <string name="settings">Settings</string>
     <string name="title_activity_maps">Map</string>
     <string name="signed_out">Signed out</string>
@@ -20,7 +20,11 @@
     <string name="sign_up">Sign up</string>
     <string name="auth_failed">Authentication failed.</string>
     <string name="blank_fields">All fields must be filled in.</string>
-    <!--For facebook-->
-    <string name="facebook_app_id">324381454920722</string>
-    <string name="fb_login_protocol_scheme">fb324381454920722</string>
+    <string name="iw_updated_at">Updated at: %1$s</string>
+    <string name="iw_gas">Gas: %1$s</string>
+    <string name="iw_petrol">Petrol: %1$s</string>
+    <string name="iw_diesel">Diesel: %1$s</string>
+    <string name="empty_error">Empty</string>
+    <string name="bad_price_error">Bad price</string>
+    <string name="email_verification_error">You have not verified your email.</string>
 </resources>
