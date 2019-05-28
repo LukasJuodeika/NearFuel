@@ -76,12 +76,12 @@ class EditStationFragment : Fragment(), EditStationContract.View {
         confirmButton.setOnClickListener {
 
             if(station != null && validate(rootView)){
-                station.fuel_price = edit_petrol.text.toString()
-                station.gas_price = edit_gas.text.toString()
-                station.diesel_price = edit_diesel.text.toString()
+                if(chip_petrol.isChecked) station.fuel_price = edit_petrol.text.toString()
+                if(chip_gas.isChecked) station.gas_price = edit_gas.text.toString()
+                if(chip_diesel.isChecked) station.diesel_price = edit_diesel.text.toString()
                 dagger2Presenter.updateGasStation(station)
             }
-            Log.d("response", arguments!!.getParcelable<GasStation>("amount").toString());
+            Log.d("response", arguments!!.getParcelable<GasStation>("amount").toString())
 
         }
 
