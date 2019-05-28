@@ -26,4 +26,5 @@
     <string name="iw_diesel">Diesel: %1$s</string>
     <string name="empty_error">Empty</string>
     <string name="bad_price_error">Bad price</string>
+    <string name="email_verification_error">You have not verified your email.</string>
 </resources>

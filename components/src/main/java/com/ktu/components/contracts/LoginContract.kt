@@ -7,6 +7,7 @@ interface LoginContract {
         fun displayError(message: String)
         fun displayBlankFieldError()
         fun displayGenericError()
+        fun displayEmailVerificationError()
         fun showProgress()
         fun hideProgress()
     }

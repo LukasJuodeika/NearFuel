@@ -17,10 +17,12 @@ class SignUpPresenter(val view: SignUpContract.View, private val mAuth : Firebas
         view.navigate(id)
     }
 
-    fun createAccount(email: String, password : String){
+    private fun createAccount(email: String, password : String){
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    val user = mAuth.currentUser
+                    user?.sendEmailVerification()
                     view.navigateToLogin()
                 } else {
                     val exception = task.exception
