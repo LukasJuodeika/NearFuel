@@ -101,9 +101,11 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     fun observeMarkersByGoogleLocation(){
         val gasStations = Observer<List<GasStation>> { gasStations ->
 
+            mMap.clear()
             for ( station in gasStations)
             {
                 val marker = mMap.addMarker(
+
                     MarkerOptions()
                         .position(LatLng(station.lat.toDouble(), station.lng.toDouble()))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.station_marker))

@@ -25,11 +25,11 @@ class StationInfoWindowAdapter(private val mContext: Context) : GoogleMap.InfoWi
         else
         view.iw_diesel_price.text = resources.getString(R.string.iw_diesel, station.diesel_price)
         if(station.fuel_price==null)
-            view.iw_fuel_price.text = resources.getString(R.string.iw_diesel, "No data")
+            view.iw_fuel_price.text = resources.getString(R.string.iw_petrol, "No data")
         else
         view.iw_fuel_price.text = resources.getString(R.string.iw_petrol, station.fuel_price)
         if(station.gas_price==null)
-            view.iw_gas_price.text = resources.getString(R.string.iw_diesel, "No data")
+            view.iw_gas_price.text = resources.getString(R.string.iw_gas, "No data")
         else
         view.iw_gas_price.text = resources.getString(R.string.iw_gas, station.gas_price)
         view.iw_updated_at.text = resources.getString(R.string.iw_updated_at, station.updated_at)
