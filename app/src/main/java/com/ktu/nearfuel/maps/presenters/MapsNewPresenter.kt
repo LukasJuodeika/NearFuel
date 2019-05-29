@@ -45,7 +45,7 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Completable.fromAction {
-                    gasStationDao.insertGasStation(gasStation)
+                    gasStationDao.insertGasStation(it)
                 }.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe({
                     }, {
