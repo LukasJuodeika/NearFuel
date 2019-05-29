@@ -48,7 +48,7 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
         rootView.recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(list, FuelType.DIESEL, this@ItemListFragment)
+            adapter = ListAdapter(list, fuelType, this@ItemListFragment)
         }
     }
 
