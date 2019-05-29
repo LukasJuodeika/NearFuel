@@ -76,10 +76,29 @@ class EditStationFragment : Fragment(), EditStationContract.View {
         confirmButton.setOnClickListener {
 
             if(station != null && validate(rootView)){
+                if(edit_petrol.text.toString().equals(station.fuel_price) &&
+                    edit_gas.text.toString().equals(station.gas_price) &&
+                    edit_diesel.text.toString().equals(station.diesel_price))
+                {
+                    var errorMessage = ""
+                    errorMessage ="You have not updated prices"
+                    if (errorMessage.isNotBlank()) {
+                        rootView.edit_gas.error = errorMessage
+                    }
+                    return@setOnClickListener
+                }
+                if(!(chip_diesel.isChecked || chip_gas.isChecked || chip_petrol.isChecked)) {
+                    var errorMessage = ""
+                    errorMessage ="Select at least one chip to update prices"
+                    if (errorMessage.isNotBlank()) {
+                        rootView.edit_gas.error = errorMessage
+                    }
+                    return@setOnClickListener
+                }
                 if(chip_petrol.isChecked) station.fuel_price = edit_petrol.text.toString()
                 if(chip_gas.isChecked) station.gas_price = edit_gas.text.toString()
                 if(chip_diesel.isChecked) station.diesel_price = edit_diesel.text.toString()
-                dagger2Presenter.updateGasStation(station)
+                    dagger2Presenter.updateGasStation(station)
             }
             Log.d("response", arguments!!.getParcelable<GasStation>("amount").toString())
 
