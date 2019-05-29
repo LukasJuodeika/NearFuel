@@ -198,7 +198,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     }
 
     companion object{
-        private const val LOCATION_INTERVAL = 1000_000L
+        private const val LOCATION_INTERVAL = 10000L
         private const val LOCATION_ZOOM = 16f
     }
 
