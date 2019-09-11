@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Build
 
-class PermissionHandler{
+class PermissionHandler {
 
     companion object {
         fun getPermissions(activity: Activity) {
@@ -14,7 +14,8 @@ class PermissionHandler{
             notGranted.toArray(array)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && array.isNotEmpty()) {
-                activity.requestPermissions(array,
+                activity.requestPermissions(
+                    array,
                     PERMISSION_GENERAL
                 )
             }
@@ -35,7 +36,8 @@ class PermissionHandler{
         private const val PERMISSION_GENERAL = 10
         private val permissions = arrayOf(
             android.Manifest.permission.ACCESS_FINE_LOCATION,
-            android.Manifest.permission.ACCESS_COARSE_LOCATION)
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+        )
 
     }
 }

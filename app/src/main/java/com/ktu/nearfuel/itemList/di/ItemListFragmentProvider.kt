@@ -6,8 +6,8 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-abstract class ItemListFragmentProvider{
+abstract class ItemListFragmentProvider {
 
     @ContributesAndroidInjector(modules = [ItemListFragmentModule::class, ItemListViewModule::class])
-    internal abstract fun provideItemFragment() : ItemListFragment
+    internal abstract fun provideItemFragment(): ItemListFragment
 }

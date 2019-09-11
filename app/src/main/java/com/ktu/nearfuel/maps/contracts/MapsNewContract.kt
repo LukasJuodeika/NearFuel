@@ -9,7 +9,7 @@ import com.ktu.nearfuel.maps.views.MainMVPView
 
 interface MapsNewContract<V : MainMVPView> {
 
-    fun getStationsNearLocation(latLng:LatLng)
+    fun getStationsNearLocation(latLng: LatLng)
     fun getGasStationsLivedata(): MutableLiveData<List<GasStation>>
     fun getGasStationUpdateResult(): MutableLiveData<Resource<GasStation>>
     fun updateGasStation(gasStation: GasStation)

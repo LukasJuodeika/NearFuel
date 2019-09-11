@@ -12,13 +12,14 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(modules = [(MainActivityModule::class),
-        (MapsFragmentProvider::class), (ItemListFragmentProvider::class)])
+    @ContributesAndroidInjector(
+        modules = [(MainActivityModule::class),
+            (MapsFragmentProvider::class), (ItemListFragmentProvider::class)]
+    )
     abstract fun bindMainActivityActivity(): MainActivity
 
     @ContributesAndroidInjector(modules = [(LoginFragmentProvider::class)])
     abstract fun bindAuthenticationActivityActivity(): AuthenticationActivity
-
 
 
 }

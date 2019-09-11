@@ -13,8 +13,7 @@ import com.ktu.components.objects.GasStation
     exportSchema = false
 
 )
-abstract class Database : RoomDatabase()
-{
+abstract class Database : RoomDatabase() {
     abstract fun gasStationDao(): GasStationDao
 
 }

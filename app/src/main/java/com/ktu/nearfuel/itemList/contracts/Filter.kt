@@ -1,6 +1,6 @@
 package com.ktu.nearfuel.itemList.contracts
 
-interface Filter{
+interface Filter {
     fun sortByPrice()
     fun filterUnknown()
     fun resetList()

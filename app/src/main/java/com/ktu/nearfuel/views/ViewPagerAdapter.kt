@@ -16,7 +16,8 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     private val items = arrayListOf(
         ItemListFragment.newInstance(FuelType.PETROL),
         ItemListFragment.newInstance(FuelType.DIESEL),
-        ItemListFragment.newInstance(FuelType.GAS))
+        ItemListFragment.newInstance(FuelType.GAS)
+    )
 
 
     override fun getItem(position: Int): Fragment {

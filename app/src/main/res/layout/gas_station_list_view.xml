@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
 
-        tools:menu="@menu/stations_list_menu"
-        >
+        tools:menu="@menu/stations_list_menu">
 
 
     <com.google.android.material.tabs.TabLayout
@@ -22,17 +21,17 @@
         <com.google.android.material.tabs.TabItem
                 android:text="@string/petrol"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                android:layout_width="wrap_content" />
 
         <com.google.android.material.tabs.TabItem
                 android:text="@string/diesel"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                android:layout_width="wrap_content" />
 
         <com.google.android.material.tabs.TabItem
                 android:text="@string/gas"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                android:layout_width="wrap_content" />
 
     </com.google.android.material.tabs.TabLayout>
 

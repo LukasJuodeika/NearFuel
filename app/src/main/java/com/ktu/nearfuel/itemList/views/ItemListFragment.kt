@@ -21,7 +21,8 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.item_list_fragment.view.*
 import javax.inject.Inject
 
-class ItemListFragment private constructor() : Fragment(), ItemListContract.View, Filter, ListAdapter.OnListItemClickListener {
+class ItemListFragment private constructor() : Fragment(), ItemListContract.View, Filter,
+    ListAdapter.OnListItemClickListener {
 
     private lateinit var rootView: View
 
@@ -36,7 +37,11 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
         fuelType = FuelType.valueOf(arguments!!.getString(FUEL_TYPE)!!)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         rootView = inflater.inflate(R.layout.item_list_fragment, null)
         setUpRecyclerView(listOf())
@@ -81,7 +86,7 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
 
     override fun onItemLongClick(item: GasStation): Boolean {
         val args = Bundle()
-        args.putParcelable("amount",item)
+        args.putParcelable("amount", item)
         findNavController().navigate(R.id.action_gasStationListFragment_to_addStationFragment, args)
         return true
     }
@@ -90,10 +95,10 @@ class ItemListFragment private constructor() : Fragment(), ItemListContract.View
         NavigationHandler.openNavigation(context!!, item.lng, item.lat)
     }
 
-    companion object{
-        fun newInstance(type: FuelType) : ItemListFragment{
+    companion object {
+        fun newInstance(type: FuelType): ItemListFragment {
             val args = Bundle()
-            args.putString(FUEL_TYPE,type.name)
+            args.putString(FUEL_TYPE, type.name)
             val fragment = ItemListFragment()
             fragment.arguments = args
             return fragment

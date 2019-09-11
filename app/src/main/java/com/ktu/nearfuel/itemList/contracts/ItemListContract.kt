@@ -6,11 +6,11 @@ import dagger.Provides
 
 interface ItemListContract {
 
-    interface View{
+    interface View {
         fun updateList(list: List<GasStation>)
     }
 
-    interface Presenter{
+    interface Presenter {
         fun loadListData()
         fun onDetach()
         fun sortByPrice(fuelType: FuelType)

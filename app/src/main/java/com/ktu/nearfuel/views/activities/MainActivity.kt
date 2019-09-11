@@ -24,12 +24,13 @@ import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainContract.View, HasSupportFragmentInjector{
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    MainContract.View, HasSupportFragmentInjector {
 
 
     private lateinit var navController: NavController
     private lateinit var presenter: MainContract.Presenter
-    private lateinit var mAuth : FirebaseAuth
+    private lateinit var mAuth: FirebaseAuth
 
     @Inject
     internal lateinit var presenter1: MapsNewContract<MainMVPView>
@@ -52,7 +53,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
 
         p0.isChecked = true
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             //R.id.help ->
             //navController.navigate(R.id.secondFragment)
 
-            R.id.settings->
+            R.id.settings ->
                 presenter.onNavigationItemClick(R.id.action_mapFragment_to_settingsFragment)
 
             R.id.sign_out ->
@@ -98,13 +98,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(Navigation.findNavController(this, R.id.nav_host_fragment), drawer_layout)
+        return NavigationUI.navigateUp(
+            Navigation.findNavController(this, R.id.nav_host_fragment),
+            drawer_layout
+        )
     }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-        }else {
+        } else {
             super.onBackPressed()
         }
     }

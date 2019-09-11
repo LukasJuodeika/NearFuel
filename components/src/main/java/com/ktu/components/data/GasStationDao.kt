@@ -9,7 +9,7 @@ import com.ktu.components.objects.GasStation
 import io.reactivex.Flowable
 
 @Dao
-interface GasStationDao{
+interface GasStationDao {
 
     @Insert(onConflict = REPLACE)
     fun insertGasStation(item: GasStation)
@@ -20,10 +20,10 @@ interface GasStationDao{
     @Query("SELECT * FROM GasStation WHERE fuelType = :fuelType")
     fun getGasStationsByType(fuelType: String): List<GasStation>
 
-    @Query ("DELETE FROM GasStation")
+    @Query("DELETE FROM GasStation")
     fun deleteAllData()
 
-    @Query ("SELECT * FROM GasStation")
+    @Query("SELECT * FROM GasStation")
     fun getAllGasStations(): Flowable<List<GasStation>>
 
     @Update(onConflict = REPLACE)

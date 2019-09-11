@@ -24,6 +24,7 @@
         <item name="android:textSize">15sp</item>
         <item name="cornerRadius">32dp</item>
     </style>
+
     <style name="NumberPickerStyle">
         <item name="colorControlNormal">@color/colorAccent</item>
     </style>

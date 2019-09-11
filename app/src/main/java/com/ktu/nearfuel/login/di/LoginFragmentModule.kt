@@ -15,14 +15,17 @@ import rx.schedulers.Schedulers
 import dagger.Binds
 
 
-
-
 @Module
-class LoginFragmentModule  {
+class LoginFragmentModule {
 
     @Provides
-    internal fun provideItemListPresenter(itemListContract: LoginContract.View, schedulersFacade: SchedulersFacade, apiInterface: APIInterface, mAuth: FirebaseAuth)
-            : LoginContract.Presenter{
+    internal fun provideItemListPresenter(
+        itemListContract: LoginContract.View,
+        schedulersFacade: SchedulersFacade,
+        apiInterface: APIInterface,
+        mAuth: FirebaseAuth
+    )
+            : LoginContract.Presenter {
         return LoginPresenter(itemListContract, schedulersFacade, mAuth, apiInterface);
     }
 

@@ -1,4 +1,5 @@
 package com.ktu.components.objects.jsonResponses.gasStationResponse
+
 data class Meta(
     val current_page: Int,
     val from: Int,

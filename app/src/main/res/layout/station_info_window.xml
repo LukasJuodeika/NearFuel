@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-android:background="@android:color/white"
-android:padding="8dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="8dp">
 
     <TextView
             android:id="@+id/iw_title"
@@ -14,7 +14,7 @@ android:padding="8dp">
             android:maxLines="2"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
 
     <TextView
             android:id="@+id/iw_address"
@@ -24,7 +24,7 @@ android:padding="8dp">
             android:maxLines="2"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
 
     <TextView
             android:id="@+id/iw_diesel_price"
@@ -32,21 +32,23 @@ android:padding="8dp">
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:textSize="14sp"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
+
     <TextView
             android:id="@+id/iw_gas_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:textSize="14sp"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
+
     <TextView
             android:id="@+id/iw_fuel_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:textSize="14sp"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
 
     <TextView
             android:id="@+id/iw_updated_at"
@@ -54,6 +56,6 @@ android:padding="8dp">
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:textSize="14sp"
-            android:ellipsize="end"/>
+            android:ellipsize="end" />
 
 </LinearLayout>

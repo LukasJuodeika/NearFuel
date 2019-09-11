@@ -2,11 +2,11 @@ package com.ktu.components.contracts
 
 interface StationListContract {
 
-    interface View{
+    interface View {
         fun changeElevation(elevation: Float)
     }
 
-    interface Presenter{
+    interface Presenter {
         fun sort1()
         fun sort2()
         fun sort3()

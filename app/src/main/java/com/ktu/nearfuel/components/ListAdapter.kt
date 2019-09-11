@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.gas_station_list_item.view.*
 class ListAdapter(
     private var list: List<GasStation>,
     private val type: FuelType,
-    private val listener: OnListItemClickListener) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+    private val listener: OnListItemClickListener
+) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -26,7 +27,7 @@ class ListAdapter(
         holder.bindView(list[position], type)
     }
 
-    fun updateList(list: List<GasStation>){
+    fun updateList(list: List<GasStation>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -35,16 +36,16 @@ class ListAdapter(
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bindView(item: GasStation, type: FuelType) {
             setFuelPrice(item, type)
-          //  view.list_item_distance.text = item.distance.toString()
+            //  view.list_item_distance.text = item.distance.toString()
             view.list_item_title.text = item.title
             setClickListeners(item)
         }
 
-        private fun setClickListeners(item: GasStation){
+        private fun setClickListeners(item: GasStation) {
             view.setOnClickListener {
                 listener.onItemClick(item)
             }
-            view.img_maps.setOnClickListener{
+            view.img_maps.setOnClickListener {
                 listener.onMapClick(item)
             }
             view.setOnLongClickListener {
@@ -52,8 +53,8 @@ class ListAdapter(
             }
         }
 
-        private fun setFuelPrice(item: GasStation, type: FuelType){
-            when(type){
+        private fun setFuelPrice(item: GasStation, type: FuelType) {
+            when (type) {
                 FuelType.DIESEL -> view.list_item_price.text = item.diesel_price
                 FuelType.PETROL -> view.list_item_price.text = item.fuel_price
                 FuelType.GAS -> view.list_item_price.text = item.gas_price
@@ -63,9 +64,9 @@ class ListAdapter(
     }
 
 
-    interface OnListItemClickListener{
+    interface OnListItemClickListener {
         fun onItemClick(item: GasStation)
-        fun onItemLongClick(item: GasStation) : Boolean
+        fun onItemLongClick(item: GasStation): Boolean
         fun onMapClick(item: GasStation)
     }
 }

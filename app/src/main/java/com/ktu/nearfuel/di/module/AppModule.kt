@@ -32,8 +32,6 @@ class AppModule {
     internal fun provideUIScheduler(): Scheduler? = Schedulers.io()
 
 
-
-
     @Provides
     @Singleton
     internal fun provideAppDatabase(context: Context): Database =
@@ -43,8 +41,10 @@ class AppModule {
     @Singleton
     internal fun provideFirebaseAuth(context: Context): FirebaseAuth =
         FirebaseAuth.getInstance()
+
     @Provides
     @Singleton
-        internal fun provideGasStationDao(appDatabase: Database): GasStationDao = appDatabase.gasStationDao()
+    internal fun provideGasStationDao(appDatabase: Database): GasStationDao =
+        appDatabase.gasStationDao()
 
 }

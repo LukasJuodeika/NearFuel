@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph" app:startDestination="@id/mapFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_graph"
+        app:startDestination="@id/mapFragment">
 
     <fragment
             android:id="@+id/gasStationListFragment"
             android:name="com.ktu.nearfuel.views.fragments.StationListFragment"
             android:label="@string/gas_stations"
-            tools:layout="@layout/gas_station_list_view"
-    >
-        <action android:id="@+id/action_gasStationListFragment_to_addStationFragment"
-                app:destination="@id/addStationFragment"/>
+            tools:layout="@layout/gas_station_list_view">
+        <action
+                android:id="@+id/action_gasStationListFragment_to_addStationFragment"
+                app:destination="@id/addStationFragment" />
     </fragment>
     <fragment
-            android:id="@+id/addStationFragment" android:name="com.ktu.nearfuel.views.fragments.EditStationFragment"
+            android:id="@+id/addStationFragment"
+            android:name="com.ktu.nearfuel.views.fragments.EditStationFragment"
             android:label="@string/edit_station"
             tools:layout="@layout/edit_station_prices">
-        <argument android:name="gasStation" app:argType="com.ktu.components.objects.GasStation" app:nullable="true"
-                  android:defaultValue="@null"/>
-        <action android:id="@+id/action_addStationFragment_to_mapFragment" app:destination="@id/mapFragment"/>
+        <argument
+                android:name="gasStation"
+                app:argType="com.ktu.components.objects.GasStation"
+                app:nullable="true"
+                android:defaultValue="@null" />
+        <action
+                android:id="@+id/action_addStationFragment_to_mapFragment"
+                app:destination="@id/mapFragment" />
     </fragment>
     <fragment
             android:id="@+id/mapFragment"
             android:name="com.ktu.nearfuel.maps.views.MapFragment"
             android:label="@string/map"
-            tools:layout = "@layout/map_fragment">
+            tools:layout="@layout/map_fragment">
 
-        <action android:id="@+id/action_mapFragment_to_addStationFragment"
-                app:destination="@id/addStationFragment">
-        </action>
+        <action
+                android:id="@+id/action_mapFragment_to_addStationFragment"
+                app:destination="@id/addStationFragment"></action>
 
-        <action android:id="@+id/action_mapFragment_to_gasStationListFragment"
-                app:destination="@id/gasStationListFragment"/>
-        <action android:id="@+id/action_mapFragment_to_settingsFragment" app:destination="@id/settingsFragment"/>
+        <action
+                android:id="@+id/action_mapFragment_to_gasStationListFragment"
+                app:destination="@id/gasStationListFragment" />
+        <action
+                android:id="@+id/action_mapFragment_to_settingsFragment"
+                app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
             android:id="@+id/settingsFragment"
             android:name="com.ktu.nearfuel.views.fragments.SettingsFragment"
             android:label="@string/settings"
-            tools:layout = "@layout/settings_fragment"/>
+            tools:layout="@layout/settings_fragment" />
 
 </navigation>

@@ -18,10 +18,14 @@ import kotlinx.android.synthetic.main.fragment_signup.view.*
 class SignUpFragment : Fragment(), SignUpContract.View {
 
     private lateinit var mPresenter: SignUpPresenter
-    private lateinit var mNavigation : NavController
+    private lateinit var mNavigation: NavController
     private lateinit var mAuth: FirebaseAuth
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_signup, container, false)
         mAuth = FirebaseAuth.getInstance()
         mPresenter = SignUpPresenter(this, mAuth)
@@ -30,8 +34,8 @@ class SignUpFragment : Fragment(), SignUpContract.View {
         return view
     }
 
-    private fun setClickListeners(view: View){
-        view.link_login.setOnClickListener{
+    private fun setClickListeners(view: View) {
+        view.link_login.setOnClickListener {
             mPresenter.onNavigationItemClicked(R.id.action_signUpFragment_to_loginFragment)
         }
         view.btn_signup.setOnClickListener {

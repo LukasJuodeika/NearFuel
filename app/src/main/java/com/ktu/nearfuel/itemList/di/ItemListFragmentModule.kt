@@ -10,16 +10,20 @@ import rx.schedulers.Schedulers
 import dagger.Binds
 
 
-
-
 @Module
 class ItemListFragmentModule {
 
     @Provides
-    internal fun provideItemListPresenter(itemListContract: ItemListContract.View, schedulersFacade: SchedulersFacade,
-                                          dao: GasStationDao)
-            : ItemListContract.Presenter{
-        return ItemListPresenter(view = itemListContract, schedulersFacade = schedulersFacade, stationsDao = dao);
+    internal fun provideItemListPresenter(
+        itemListContract: ItemListContract.View, schedulersFacade: SchedulersFacade,
+        dao: GasStationDao
+    )
+            : ItemListContract.Presenter {
+        return ItemListPresenter(
+            view = itemListContract,
+            schedulersFacade = schedulersFacade,
+            stationsDao = dao
+        );
     }
 
 

@@ -10,12 +10,11 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ItemListPresenter
-    @Inject constructor(
-        private val view: ItemListContract.View,
-        private val schedulersFacade: SchedulersFacade,
-        var stationsDao: GasStationDao
-)
- : ItemListContract.Presenter {
+@Inject constructor(
+    private val view: ItemListContract.View,
+    private val schedulersFacade: SchedulersFacade,
+    var stationsDao: GasStationDao
+) : ItemListContract.Presenter {
 
 
     private val disposables = CompositeDisposable()
@@ -38,7 +37,7 @@ class ItemListPresenter
     }
 
     override fun sortByPrice(fuelType: FuelType) {
-        when(fuelType){
+        when (fuelType) {
             FuelType.PETROL -> dataList.sortBy { it.fuel_price?.toDoubleOrNull() }
             FuelType.DIESEL -> dataList.sortBy { it.diesel_price?.toDoubleOrNull() }
             FuelType.GAS -> dataList.sortBy { it.gas_price?.toDoubleOrNull() }
@@ -47,10 +46,10 @@ class ItemListPresenter
     }
 
     override fun filterUnknown(fuelType: FuelType) {
-        dataList = when(fuelType){
-            FuelType.PETROL -> dataList.filter { it.fuel_price != null} as ArrayList<GasStation>
+        dataList = when (fuelType) {
+            FuelType.PETROL -> dataList.filter { it.fuel_price != null } as ArrayList<GasStation>
             FuelType.DIESEL -> dataList.filter { it.diesel_price != null } as ArrayList<GasStation>
-            FuelType.GAS -> dataList.filter { it.gas_price != null} as ArrayList<GasStation>
+            FuelType.GAS -> dataList.filter { it.gas_price != null } as ArrayList<GasStation>
         }
         view.updateList(dataList)
     }

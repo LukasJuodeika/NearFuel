@@ -14,14 +14,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class NearestGasStationsJsonResponse (
+data class NearestGasStationsJsonResponse(
 
-	@SerializedName("html_attributions") val html_attributions : List<String>,
-	@SerializedName("next_page_token") val next_page_token : String,
-	@SerializedName("results") val results : List<Results>,
-	@SerializedName("status") val status : String
+    @SerializedName("html_attributions") val html_attributions: List<String>,
+    @SerializedName("next_page_token") val next_page_token: String,
+    @SerializedName("results") val results: List<Results>,
+    @SerializedName("status") val status: String
 ) {
-	override fun toString(): String {
-		return "NearestGasStationsJsonResponse(html_attributions=$html_attributions, next_page_token='$next_page_token', results=$results, status='$status')"
-	}
+    override fun toString(): String {
+        return "NearestGasStationsJsonResponse(html_attributions=$html_attributions, next_page_token='$next_page_token', results=$results, status='$status')"
+    }
 }

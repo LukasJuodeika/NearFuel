@@ -1,4 +1,5 @@
 package com.ktu.nearfuel.views.activities
+
 import com.ktu.nearfuel.maps.contracts.MapsNewContract
 import com.ktu.nearfuel.maps.presenters.MapsNewPresenter
 import com.ktu.nearfuel.maps.views.MainMVPView

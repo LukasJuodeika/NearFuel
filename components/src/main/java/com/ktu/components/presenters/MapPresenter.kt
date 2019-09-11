@@ -2,10 +2,9 @@ package com.ktu.components.presenters
 
 import com.ktu.components.contracts.MapContract
 
-class MapPresenter(val view: MapContract.View): MapContract.Presenter
-{
+class MapPresenter(val view: MapContract.View) : MapContract.Presenter {
 
-    private var isOutOfFocus : Boolean = false
+    private var isOutOfFocus: Boolean = false
 
     override fun onResume() {
         view.unlockDrawer()
@@ -22,10 +21,10 @@ class MapPresenter(val view: MapContract.View): MapContract.Presenter
     }
 
     override fun onLocationResult() {
-        if(!isOutOfFocus) view.moveCamera(false)
+        if (!isOutOfFocus) view.moveCamera(false)
     }
 
-    override fun setFocus(value : Boolean) {
+    override fun setFocus(value: Boolean) {
         isOutOfFocus = value
     }
 }

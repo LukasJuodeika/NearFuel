@@ -38,7 +38,8 @@ class RetrofitModule {
             .baseUrl(APIURL.API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(
-                RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())) //
+                RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
+            ) //
             .client(okHttpClient)
             .build()
     }

@@ -35,8 +35,7 @@ import com.ktu.nearfuel.R
 import com.ktu.nearfuel.views.StationInfoWindowAdapter
 
 
-class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
-{
+class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback {
 
     private lateinit var presenter: MapContract.Presenter
 
@@ -52,9 +51,13 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
     private lateinit var mRequest: LocationRequest
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var mLocationCallback: LocationCallback
-    private lateinit var mLastLocation : Location
+    private lateinit var mLastLocation: Location
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val rootView = inflater.inflate(R.layout.map_fragment, container, false)
 
         this.rootView = rootView
@@ -65,11 +68,13 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
         return rootView
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         stopTracking()
         mapView.onDestroy()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidSupportInjection.inject(this)
@@ -92,18 +97,18 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         presenter.onPause()
         mapView.onPause()
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-       // dagger2Presenter.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
+        // dagger2Presenter.getStationsNearLocation(latLng = LatLng (54.898521, 23.903597))
     }
 
-    fun observeMarkersByGoogleLocation(){
+    fun observeMarkersByGoogleLocation() {
         val gasStations = Observer<List<GasStation>> { gasStations ->
 
             mMap.clear()
-            for ( station in gasStations)
-            {
+            for (station in gasStations) {
                 val marker = mMap.addMarker(
 
                     MarkerOptions()
@@ -120,16 +125,17 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
     private fun performDependencyInjection() = AndroidSupportInjection.inject(this)
 
-    override fun moveCamera(animate: Boolean){
+    override fun moveCamera(animate: Boolean) {
         val cameraPosition = CameraPosition.Builder()
-            .target(LatLng(mLastLocation.latitude, mLastLocation.longitude)
+            .target(
+                LatLng(mLastLocation.latitude, mLastLocation.longitude)
             ).zoom(LOCATION_ZOOM).build()
 
         val cameraUpdate = CameraUpdateFactory
             .newCameraPosition(cameraPosition)
-        if(animate){
+        if (animate) {
             mMap.animateCamera(cameraUpdate)
-        }else{
+        } else {
             mMap.moveCamera(cameraUpdate)
         }
     }
@@ -137,7 +143,7 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
 
     override fun openAddStationFragment(gasStation: GasStation?) {
         var bundle = bundleOf("amount" to gasStation)
-        navController.navigate(R.id.action_mapFragment_to_addStationFragment,  bundle)
+        navController.navigate(R.id.action_mapFragment_to_addStationFragment, bundle)
     }
 
 
@@ -147,19 +153,21 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         observeMarkersByGoogleLocation()
 
     }
+
     @SuppressLint("MissingPermission")
-    override fun setMapSettings(){
+    override fun setMapSettings() {
         mMap.uiSettings.isMyLocationButtonEnabled = true
         mMap.isMyLocationEnabled = true
         mMap.setOnCameraMoveListener { presenter.setFocus(true) }
         mMap.setOnMyLocationButtonClickListener {
             presenter.setFocus(false)
             moveCamera(true)
-            true }
+            true
+        }
         mMap.setInfoWindowAdapter(StationInfoWindowAdapter(context!!.applicationContext))
         mMap.setOnInfoWindowLongClickListener {
             Log.d("testingTag", it.tag.toString())
-            var gasStation:GasStation = it.tag as GasStation;
+            var gasStation: GasStation = it.tag as GasStation;
             openAddStationFragment(gasStation)
         }
     }
@@ -173,8 +181,12 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
                 }
 
                 mLastLocation = locationResult.lastLocation
-                dagger2Presenter.getStationsNearLocation(LatLng(mLastLocation.latitude,
-                    mLastLocation.longitude ));
+                dagger2Presenter.getStationsNearLocation(
+                    LatLng(
+                        mLastLocation.latitude,
+                        mLastLocation.longitude
+                    )
+                );
                 presenter.onLocationResult()
             }
         }
@@ -199,8 +211,8 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback
         activity!!.drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
-    companion object{
-        private const val LOCATION_INTERVAL = 1000*60L
+    companion object {
+        private const val LOCATION_INTERVAL = 1000 * 60L
         private const val LOCATION_ZOOM = 16f
     }
 

@@ -1,4 +1,5 @@
 package com.ktu.components.objects.NearestGasStation
+
 import com.google.gson.annotations.SerializedName
 
 /*
@@ -12,22 +13,22 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
-data class Results (
+data class Results(
 
-	@SerializedName("geometry") val geometry : Geometry,
-	@SerializedName("icon") val icon : String,
-	@SerializedName("id") val id : String,
-	@SerializedName("name") val name : String,
-	@SerializedName("place_id") val place_id : String,
-	@SerializedName("plus_code") val plus_code : Plus_code,
-	@SerializedName("rating") val rating : Double,
-	@SerializedName("reference") val reference : String,
-	@SerializedName("scope") val scope : String,
-	@SerializedName("types") val types : List<String>,
-	@SerializedName("user_ratings_total") val user_ratings_total : Int,
-	@SerializedName("vicinity") val vicinity : String
+    @SerializedName("geometry") val geometry: Geometry,
+    @SerializedName("icon") val icon: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("place_id") val place_id: String,
+    @SerializedName("plus_code") val plus_code: Plus_code,
+    @SerializedName("rating") val rating: Double,
+    @SerializedName("reference") val reference: String,
+    @SerializedName("scope") val scope: String,
+    @SerializedName("types") val types: List<String>,
+    @SerializedName("user_ratings_total") val user_ratings_total: Int,
+    @SerializedName("vicinity") val vicinity: String
 ) {
-	override fun toString(): String {
-		return "Results(geometry=$geometry, icon='$icon', id='$id', name='$name', place_id='$place_id', plus_code=$plus_code, rating=$rating, reference='$reference', scope='$scope', types=$types, user_ratings_total=$user_ratings_total, vicinity='$vicinity')"
-	}
+    override fun toString(): String {
+        return "Results(geometry=$geometry, icon='$icon', id='$id', name='$name', place_id='$place_id', plus_code=$plus_code, rating=$rating, reference='$reference', scope='$scope', types=$types, user_ratings_total=$user_ratings_total, vicinity='$vicinity')"
+    }
 }

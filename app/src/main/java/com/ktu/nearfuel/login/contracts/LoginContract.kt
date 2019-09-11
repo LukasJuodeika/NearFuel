@@ -1,7 +1,7 @@
 package com.ktu.nearfuel.login.contracts
 
 interface LoginContract {
-    interface View{
+    interface View {
         fun navigate(id: Int)
         fun login()
         fun displayError(message: String)
@@ -11,7 +11,8 @@ interface LoginContract {
         fun showProgress()
         fun hideProgress()
     }
-    interface Presenter{
+
+    interface Presenter {
         fun onNavigationItemClicked(id: Int)
         fun onLoginClicked(email: String, password: String)
     }

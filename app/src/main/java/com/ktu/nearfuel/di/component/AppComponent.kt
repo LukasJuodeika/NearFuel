@@ -16,10 +16,12 @@ import javax.inject.Singleton
  * Created by jyotidubey on 05/01/18.
  */
 @Singleton
-@Component(modules = [(AndroidInjectionModule::class),
-    (AppModule::class),
-    (RetrofitModule::class),
-    (ActivityBuilder::class)])
+@Component(
+    modules = [(AndroidInjectionModule::class),
+        (AppModule::class),
+        (RetrofitModule::class),
+        (ActivityBuilder::class)]
+)
 interface AppComponent {
     fun getApiInterface(): APIInterface
     @Component.Builder

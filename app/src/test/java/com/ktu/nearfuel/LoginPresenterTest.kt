@@ -15,47 +15,51 @@ import org.mockito.junit.MockitoJUnitRunner
 class LoginPresenterTest {
 
     @Mock
-    private lateinit var mockView : LoginContract.View
+    private lateinit var mockView: LoginContract.View
     @Mock
-    private lateinit var mockAuth : FirebaseAuth
+    private lateinit var mockAuth: FirebaseAuth
 
     private lateinit var presenter: LoginPresenter
 
     @Before
-    fun setUp(){
+    fun setUp() {
         presenter = LoginPresenter(mockView, mockAuth)
     }
 
     @Test
-    fun onLoginClicked_emptyData_displayError(){
+    fun onLoginClicked_emptyData_displayError() {
         val email = ""
         val password = ""
         presenter.onLoginClicked(email, password)
         Mockito.verify(mockView).displayBlankFieldError()
     }
+
     @Test
-    fun onLoginClicked_emptyEmail_displayError(){
+    fun onLoginClicked_emptyEmail_displayError() {
         val email = ""
         val password = "password"
         presenter.onLoginClicked(email, password)
         Mockito.verify(mockView).displayBlankFieldError()
     }
+
     @Test
-    fun onLoginClicked_emptyPassword_displayError(){
+    fun onLoginClicked_emptyPassword_displayError() {
         val email = "email"
         val password = ""
         presenter.onLoginClicked(email, password)
         Mockito.verify(mockView).displayBlankFieldError()
     }
+
     @Test
-    fun onLoginClicked_whitespaces_displayError(){
+    fun onLoginClicked_whitespaces_displayError() {
         val email = "         "
         val password = "   "
         presenter.onLoginClicked(email, password)
         Mockito.verify(mockView).displayBlankFieldError()
     }
+
     @Test
-    fun onNavigationItemClicked_navigate(){
+    fun onNavigationItemClicked_navigate() {
         val id = 0
         presenter.onNavigationItemClicked(id)
         Mockito.verify(mockView).navigate(id)

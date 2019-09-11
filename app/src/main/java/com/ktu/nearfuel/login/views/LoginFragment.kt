@@ -24,21 +24,25 @@ import java.lang.ClassCastException
 import javax.inject.Inject
 
 
-class LoginFragment: Fragment(), LoginContract.View {
+class LoginFragment : Fragment(), LoginContract.View {
 
     //Variables
-    private lateinit var mNavigation : NavController
-    private lateinit var mAuth : FirebaseAuth
+    private lateinit var mNavigation: NavController
+    private lateinit var mAuth: FirebaseAuth
     private lateinit var mCallback: OnLoginListener//Callback for finishing the activity
 
     //UI
-    private lateinit var mProgressBar : ProgressBar
+    private lateinit var mProgressBar: ProgressBar
 
     @Inject
     lateinit var presenter: LoginContract.Presenter
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         mAuth = FirebaseAuth.getInstance()
         mNavigation = findNavController()
@@ -46,6 +50,7 @@ class LoginFragment: Fragment(), LoginContract.View {
         setClickListeners(view)
         return view
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidSupportInjection.inject(this)
@@ -56,18 +61,20 @@ class LoginFragment: Fragment(), LoginContract.View {
         super.onAttach(context)
         try {
             mCallback = context as OnLoginListener
-        } catch (e : ClassCastException){
-            throw ClassCastException(activity.toString()
-                    + " must implement OnLoginListener")
+        } catch (e: ClassCastException) {
+            throw ClassCastException(
+                activity.toString()
+                        + " must implement OnLoginListener"
+            )
         }
     }
 
-    private fun setLayouts(view: View){
+    private fun setLayouts(view: View) {
         mProgressBar = view.progress_bar
     }
 
-    private fun setClickListeners(view: View){
-        view.link_sign_up.setOnClickListener{
+    private fun setClickListeners(view: View) {
+        view.link_sign_up.setOnClickListener {
             presenter.onNavigationItemClicked(R.id.action_loginFragment_to_signUpFragment)
         }
         view.btn_login.setOnClickListener {
@@ -106,10 +113,11 @@ class LoginFragment: Fragment(), LoginContract.View {
     }
 
     override fun displayEmailVerificationError() {
-        Toast.makeText(activity, getString(R.string.email_verification_error), Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, getString(R.string.email_verification_error), Toast.LENGTH_LONG)
+            .show()
     }
 
-    interface OnLoginListener{
+    interface OnLoginListener {
         fun onLogin()
     }
 }

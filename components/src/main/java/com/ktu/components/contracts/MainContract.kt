@@ -2,14 +2,15 @@ package com.ktu.components.contracts
 
 interface MainContract {
 
-    interface View{
+    interface View {
         fun navigate(id: Int)
         fun signOut()
         fun displayEmail(email: String)
     }
-    interface Presenter{
+
+    interface Presenter {
         fun onCreate()
-        fun onNavigationItemClick(id : Int)
+        fun onNavigationItemClick(id: Int)
         fun onSignOutClick()
     }
 }

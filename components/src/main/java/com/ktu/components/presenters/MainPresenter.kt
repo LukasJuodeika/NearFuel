@@ -3,9 +3,10 @@ package com.ktu.components.presenters
 import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.contracts.MainContract
 
-class MainPresenter(val view: MainContract.View, private val mAuth: FirebaseAuth): MainContract.Presenter {
+class MainPresenter(val view: MainContract.View, private val mAuth: FirebaseAuth) :
+    MainContract.Presenter {
 
-    override fun onNavigationItemClick(id: Int){
+    override fun onNavigationItemClick(id: Int) {
         view.navigate(id)
     }
 
@@ -18,11 +19,11 @@ class MainPresenter(val view: MainContract.View, private val mAuth: FirebaseAuth
         checkUser()
     }
 
-    private fun checkUser(){
+    private fun checkUser() {
         val currentUser = mAuth.currentUser
-        if(currentUser == null || !currentUser.isEmailVerified){
+        if (currentUser == null || !currentUser.isEmailVerified) {
             view.signOut()
-        }else{
+        } else {
             view.displayEmail(currentUser.email.toString())
         }
     }

@@ -16,7 +16,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class LoginPresenter    @Inject constructor(
+class LoginPresenter @Inject constructor(
     private val view: LoginContract.View,
     private val schedulersFacade: SchedulersFacade,
     val mAuth: FirebaseAuth,
@@ -27,10 +27,10 @@ class LoginPresenter    @Inject constructor(
     private val disposables = CompositeDisposable()
 
     override fun onLoginClicked(email: String, password: String) {
-        if (email.isNotBlank() && password.isNotBlank()){
+        if (email.isNotBlank() && password.isNotBlank()) {
             view.showProgress()
             authenticate(email, password)
-        }else{
+        } else {
             view.displayBlankFieldError()
         }
     }
@@ -39,14 +39,14 @@ class LoginPresenter    @Inject constructor(
         view.navigate(id)
     }
 
-    fun loginUserAPI(email: String, uid:String)
-    {
+    fun loginUserAPI(email: String, uid: String) {
         disposables.add(apiInterface.loginUser(
-           LoginRequestBody(email, uid))
+            LoginRequestBody(email, uid)
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-               view.login()
+                view.login()
 
             },
                 {
@@ -60,25 +60,24 @@ class LoginPresenter    @Inject constructor(
     }
 
 
-
-    private fun authenticate(email : String, password : String){
+    private fun authenticate(email: String, password: String) {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
-                    if(user != null && user.isEmailVerified)
-                       loginUserAPI(email, user.uid )
-                    else{
+                    if (user != null && user.isEmailVerified)
+                        loginUserAPI(email, user.uid)
+                    else {
                         view.displayEmailVerificationError()
                         view.hideProgress()
                     }
                 } else {
                     val exception = task.exception
-                    val errorCode : String
-                    if(exception != null){
+                    val errorCode: String
+                    if (exception != null) {
                         errorCode = exception.message.toString()
                         view.displayError(errorCode)
-                    }else{
+                    } else {
                         view.displayGenericError()
                     }
                     view.hideProgress()

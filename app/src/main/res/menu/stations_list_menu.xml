@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Sort by price" android:id="@+id/sort1"/>
-    <item android:title="Filter unknown price" android:id="@+id/sort2"/>
-    <item android:title="Reset filters" android:id="@+id/sort3"/>
+    <item
+            android:title="Sort by price"
+            android:id="@+id/sort1" />
+    <item
+            android:title="Filter unknown price"
+            android:id="@+id/sort2" />
+    <item
+            android:title="Reset filters"
+            android:id="@+id/sort3" />
 
 </menu>

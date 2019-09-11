@@ -7,11 +7,11 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-abstract class MapsFragmentProvider{
+abstract class MapsFragmentProvider {
 
     @ContributesAndroidInjector(modules = [MapsFragmentModule::class])
-    internal abstract fun provideMapsFragment() : MapFragment
+    internal abstract fun provideMapsFragment(): MapFragment
 
     @ContributesAndroidInjector(modules = [MapsFragmentModule::class])
-    internal abstract fun provideMapsFragment1() : EditStationFragment
+    internal abstract fun provideMapsFragment1(): EditStationFragment
 }

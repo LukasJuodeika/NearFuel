@@ -1,4 +1,5 @@
 package com.ktu.components.objects.NearestGasStation
+
 import com.google.gson.annotations.SerializedName
 
 /*
@@ -13,8 +14,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class Plus_code (
+data class Plus_code(
 
-	@SerializedName("compound_code") val compound_code : String,
-	@SerializedName("global_code") val global_code : String
+    @SerializedName("compound_code") val compound_code: String,
+    @SerializedName("global_code") val global_code: String
 )

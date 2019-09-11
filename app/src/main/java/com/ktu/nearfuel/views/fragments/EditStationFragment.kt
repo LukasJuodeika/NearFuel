@@ -60,7 +60,11 @@ class EditStationFragment : Fragment(), EditStationContract.View {
         mNavigation = findNavController()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val rootView = inflater.inflate(R.layout.edit_station_prices, container, false)
         val station = arguments!!.getParcelable<GasStation>("amount")
         loadDataToView(rootView, station)
@@ -75,19 +79,19 @@ class EditStationFragment : Fragment(), EditStationContract.View {
 
         confirmButton.setOnClickListener {
 
-            if(station != null && validate(rootView)){
-                if(!(chip_diesel.isChecked || chip_gas.isChecked || chip_petrol.isChecked)) {
+            if (station != null && validate(rootView)) {
+                if (!(chip_diesel.isChecked || chip_gas.isChecked || chip_petrol.isChecked)) {
                     var errorMessage = ""
-                    errorMessage ="Select at least one chip to update prices"
+                    errorMessage = "Select at least one chip to update prices"
                     if (errorMessage.isNotBlank()) {
                         rootView.edit_gas.error = errorMessage
                     }
                     return@setOnClickListener
                 }
-                if(chip_petrol.isChecked) station.fuel_price = edit_petrol.text.toString()
-                if(chip_gas.isChecked) station.gas_price = edit_gas.text.toString()
-                if(chip_diesel.isChecked) station.diesel_price = edit_diesel.text.toString()
-                    dagger2Presenter.updateGasStation(station)
+                if (chip_petrol.isChecked) station.fuel_price = edit_petrol.text.toString()
+                if (chip_gas.isChecked) station.gas_price = edit_gas.text.toString()
+                if (chip_diesel.isChecked) station.diesel_price = edit_diesel.text.toString()
+                dagger2Presenter.updateGasStation(station)
             }
             Log.d("response", arguments!!.getParcelable<GasStation>("amount").toString())
 
@@ -108,7 +112,7 @@ class EditStationFragment : Fragment(), EditStationContract.View {
         return true
     }
 
-    private fun validate(view : View) :Boolean{
+    private fun validate(view: View): Boolean {
 
         val petrol = view.edit_petrol.text.toString()
         val diesel = view.edit_diesel.text.toString()
@@ -121,44 +125,44 @@ class EditStationFragment : Fragment(), EditStationContract.View {
         var isValid = true
         var errorMessage = ""
 
-        if(chipDiesel.isChecked){
+        if (chipDiesel.isChecked) {
             errorMessage = validatePrice(diesel)
             if (errorMessage.isNotBlank()) {
                 view.edit_diesel.error = errorMessage
                 isValid = false
             }
-        }else{
+        } else {
             view.edit_diesel.error = null
         }
 
-        if(chipPetrol.isChecked){
+        if (chipPetrol.isChecked) {
             errorMessage = validatePrice(petrol)
             if (errorMessage.isNotBlank()) {
                 view.edit_petrol.error = errorMessage
                 isValid = false
             }
-        }else{
+        } else {
             view.edit_petrol.error = null
         }
 
-        if(chipGas.isChecked){
+        if (chipGas.isChecked) {
             errorMessage = validatePrice(gas)
             if (errorMessage.isNotBlank()) {
                 view.edit_gas.error = errorMessage
                 isValid = false
             }
-        }else{
+        } else {
             view.edit_gas.error = null
         }
 
         return isValid
     }
 
-    private fun validatePrice(price : String) : String{
-        if(price.isBlank()){
+    private fun validatePrice(price: String): String {
+        if (price.isBlank()) {
             return getString(R.string.empty_error)
         }
-        if(price.toDouble() > 5 || price.toDouble() < 0.01){
+        if (price.toDouble() > 5 || price.toDouble() < 0.01) {
             return getString(R.string.bad_price_error)
         }
         return ""

@@ -5,9 +5,9 @@ import android.content.Intent
 import android.net.Uri
 
 
-object NavigationHandler{
+object NavigationHandler {
 
-    fun openNavigation(context: Context, lng: String, lat: String){
+    fun openNavigation(context: Context, lng: String, lat: String) {
         val intent = Intent(
             Intent.ACTION_VIEW,
             Uri.parse("http://maps.google.com/maps?daddr=$lat,$lng")

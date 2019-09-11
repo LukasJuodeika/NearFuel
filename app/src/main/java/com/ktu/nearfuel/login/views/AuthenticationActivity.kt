@@ -24,7 +24,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View,
 
     override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
     //Variables
-    private lateinit var mPresenter : AuthenticationPresenter
+    private lateinit var mPresenter: AuthenticationPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -40,8 +40,8 @@ class AuthenticationActivity : AppCompatActivity(), AuthenticationContract.View,
         this.finish()
     }
 
-    override fun requestPermissions(){
-        if(PermissionHandler.getMissingPermissions(this).size > 0) {
+    override fun requestPermissions() {
+        if (PermissionHandler.getMissingPermissions(this).size > 0) {
             PermissionHandler.getPermissions(this)
         }
     }

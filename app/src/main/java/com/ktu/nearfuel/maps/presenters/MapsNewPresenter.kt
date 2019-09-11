@@ -26,19 +26,29 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
 
 ) : MapsNewContract<V> {
     override fun getGasStationUpdateResult(): MutableLiveData<Resource<GasStation>> {
-       return updategasStationLivedata
+        return updategasStationLivedata
     }
 
-    val updategasStationLivedata =  MutableLiveData<Resource<GasStation>>()
+    val updategasStationLivedata = MutableLiveData<Resource<GasStation>>()
     override fun updateGasStation(gasStation: GasStation) {
         updategasStationLivedata.value = Resource.loading(null)
         disposable.add(apiInterface.updateStation(
 
-            GasStationRequestBody(gasStation.address,
-                gasStation.created_at, gasStation.diesel_price, gasStation.fuelType,
-                gasStation.fuel_price, gasStation.gas_price, gasStation.lat, gasStation.lng,gasStation.station_id, gasStation.title,
+            GasStationRequestBody(
+                gasStation.address,
                 gasStation.created_at,
-                gasStation.user_id,  FirebaseAuth.getInstance().currentUser!!.uid)
+                gasStation.diesel_price,
+                gasStation.fuelType,
+                gasStation.fuel_price,
+                gasStation.gas_price,
+                gasStation.lat,
+                gasStation.lng,
+                gasStation.station_id,
+                gasStation.title,
+                gasStation.created_at,
+                gasStation.user_id,
+                FirebaseAuth.getInstance().currentUser!!.uid
+            )
 
         )
             .subscribeOn(Schedulers.io())
@@ -73,12 +83,12 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     override fun getStationsNearLocation(latLng: LatLng) {
         startObservingStationsFromDao()
         getStationsFromAPI(latLng)
-       // getStationsFromMapsAPI(latLng)
+        // getStationsFromMapsAPI(latLng)
 
     }
 
 
-    fun getStationsFromAPI(latLng: LatLng){
+    fun getStationsFromAPI(latLng: LatLng) {
         val location = latLng.latitude.toString() + "," + latLng.longitude.toString()
         disposable.add(apiInterface.getAllGasStations(
             location, FirebaseAuth.getInstance().currentUser!!.uid
@@ -87,15 +97,15 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
 
-             val gasStationResponse  = it
+                val gasStationResponse = it
                 Completable.fromAction {
                     gasStationDao.insertAllGasStations(gasStationResponse.data)
                 }.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        }, {
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    }, {
                         Log.d("responseerror", it.message)
 
-                        })
+                    })
 
             },
                 {

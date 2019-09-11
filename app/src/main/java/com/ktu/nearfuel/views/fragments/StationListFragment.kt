@@ -16,8 +16,7 @@ import com.ktu.nearfuel.views.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.gas_station_list_view.view.*
 
-class StationListFragment : Fragment(), StationListContract.View
-{
+class StationListFragment : Fragment(), StationListContract.View {
     private lateinit var pagerAdapter: ViewPagerAdapter
     private lateinit var presenter: StationListContract.Presenter
     private lateinit var currentPager: Filter
@@ -27,8 +26,12 @@ class StationListFragment : Fragment(), StationListContract.View
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.gas_station_list_view,null)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val rootView = inflater.inflate(R.layout.gas_station_list_view, null)
         setupViewPager(rootView)
         return rootView
     }
@@ -38,8 +41,12 @@ class StationListFragment : Fragment(), StationListContract.View
         view.viewpager.adapter = pagerAdapter
         view.tablayout.setupWithViewPager(view.viewpager)
 
-        view.viewpager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener(){
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        view.viewpager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 currentPager = pagerAdapter.getItem(position) as ItemListFragment
             }
@@ -62,8 +69,8 @@ class StationListFragment : Fragment(), StationListContract.View
         presenter.onDetach()
     }
 
-    override fun changeElevation(elevation : Float){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+    override fun changeElevation(elevation: Float) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity!!.toolbar.elevation = elevation
         }
     }
@@ -74,14 +81,14 @@ class StationListFragment : Fragment(), StationListContract.View
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.sort1 ->{
+        when (item.itemId) {
+            R.id.sort1 -> {
                 currentPager.sortByPrice()
             }
-            R.id.sort2 ->{
+            R.id.sort2 -> {
                 currentPager.filterUnknown()
             }
-            R.id.sort3 ->{
+            R.id.sort3 -> {
                 currentPager.resetList()
             }
             else ->

@@ -2,10 +2,11 @@ package com.ktu.components.contracts
 
 interface AuthenticationContract {
 
-    interface View{
+    interface View {
         fun requestPermissions()
     }
-    interface Presenter{
+
+    interface Presenter {
         fun checkForPermissions()
     }
 }

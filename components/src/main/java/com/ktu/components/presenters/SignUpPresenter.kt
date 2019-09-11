@@ -3,12 +3,13 @@ package com.ktu.components.presenters
 import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.contracts.SignUpContract
 
-class SignUpPresenter(val view: SignUpContract.View, private val mAuth : FirebaseAuth): SignUpContract.Presenter {
+class SignUpPresenter(val view: SignUpContract.View, private val mAuth: FirebaseAuth) :
+    SignUpContract.Presenter {
 
     override fun onSignUpClicked(email: String, password: String) {
-        if (email.isNotBlank() && password.isNotBlank()){
+        if (email.isNotBlank() && password.isNotBlank()) {
             createAccount(email, password)
-        }else{
+        } else {
             view.displayBlankFieldError()
         }
     }
@@ -17,7 +18,7 @@ class SignUpPresenter(val view: SignUpContract.View, private val mAuth : Firebas
         view.navigate(id)
     }
 
-    private fun createAccount(email: String, password : String){
+    private fun createAccount(email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -26,11 +27,11 @@ class SignUpPresenter(val view: SignUpContract.View, private val mAuth : Firebas
                     view.navigateToLogin()
                 } else {
                     val exception = task.exception
-                    val errorCode : String
-                    if(exception != null){
+                    val errorCode: String
+                    if (exception != null) {
                         errorCode = exception.message.toString()
                         view.displayError(errorCode)
-                    }else{
+                    } else {
                         view.displayGenericError()
                     }
 
