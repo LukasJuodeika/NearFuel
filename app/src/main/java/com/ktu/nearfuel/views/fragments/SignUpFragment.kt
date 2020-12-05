@@ -8,18 +8,23 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.contracts.SignUpContract
-import com.ktu.components.presenters.SignUpPresenter
+import com.ktu.nearfuel.login.presenters.SignUpPresenter
 import com.ktu.nearfuel.R
+import com.ktu.nearfuel.network.APIInterface
 import kotlinx.android.synthetic.main.fragment_signup.view.*
+import javax.inject.Inject
+import javax.inject.Named
 
 
 class SignUpFragment : Fragment(), SignUpContract.View {
 
     private lateinit var mPresenter: SignUpPresenter
     private lateinit var mNavigation: NavController
-    private lateinit var mAuth: FirebaseAuth
+
+    @Inject
+    @Named("unauthorized")
+    lateinit var apiInterface: APIInterface
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +32,7 @@ class SignUpFragment : Fragment(), SignUpContract.View {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_signup, container, false)
-        mAuth = FirebaseAuth.getInstance()
-        mPresenter = SignUpPresenter(this, mAuth)
+        mPresenter = SignUpPresenter(this, apiInterface)
         mNavigation = findNavController()
         setClickListeners(view)
         return view

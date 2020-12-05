@@ -2,7 +2,7 @@ package com.ktu.nearfuel
 
 import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.contracts.SignUpContract
-import com.ktu.components.presenters.SignUpPresenter
+import com.ktu.nearfuel.login.presenters.SignUpPresenter
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,7 +23,8 @@ class SignUpPresenterTest {
 
     @Before
     fun setUp() {
-        presenter = SignUpPresenter(mockView, mockAuth)
+        presenter =
+            SignUpPresenter(mockView, mockAuth)
     }
 
     @Test
