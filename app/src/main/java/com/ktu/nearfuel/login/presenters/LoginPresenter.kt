@@ -1,7 +1,6 @@
 package com.ktu.nearfuel.login.presenters
 
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
 import com.ktu.nearfuel.BuildConfig
 import com.ktu.nearfuel.login.contracts.LoginContract
 import com.ktu.nearfuel.network.APIInterface

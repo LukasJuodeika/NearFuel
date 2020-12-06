@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.data.FuelType
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.itemList.contracts.ItemListContract
@@ -28,7 +27,6 @@ class LoginFragment : Fragment(), LoginContract.View {
 
     //Variables
     private lateinit var mNavigation: NavController
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var mCallback: OnLoginListener//Callback for finishing the activity
 
     //UI
@@ -44,7 +42,6 @@ class LoginFragment : Fragment(), LoginContract.View {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
-        mAuth = FirebaseAuth.getInstance()
         mNavigation = findNavController()
         setLayouts(view)
         setClickListeners(view)

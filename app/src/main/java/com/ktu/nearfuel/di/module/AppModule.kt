@@ -3,7 +3,6 @@ package com.ktu.nearfuel.di.module
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.data.Database
 import com.ktu.components.data.GasStationDao
 import dagger.Module
@@ -36,11 +35,6 @@ class AppModule {
     @Singleton
     internal fun provideAppDatabase(context: Context): Database =
         Room.databaseBuilder(context, Database::class.java, "nearFuel").build()
-
-    @Provides
-    @Singleton
-    internal fun provideFirebaseAuth(context: Context): FirebaseAuth =
-        FirebaseAuth.getInstance()
 
     @Provides
     @Singleton

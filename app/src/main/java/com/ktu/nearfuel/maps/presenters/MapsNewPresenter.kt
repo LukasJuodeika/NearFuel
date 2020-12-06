@@ -11,7 +11,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.auth.FirebaseAuth
 import com.ktu.nearfuel.network.Resource
 import com.ktu.nearfuel.maps.contracts.MapsNewContract
 import com.ktu.nearfuel.network.models.GasStationRequestBody
@@ -46,8 +45,7 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
                 gasStation.station_id,
                 gasStation.title,
                 gasStation.created_at,
-                gasStation.user_id,
-                FirebaseAuth.getInstance().currentUser!!.uid
+                gasStation.user_id
             )
 
         )
@@ -91,7 +89,7 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
     fun getStationsFromAPI(latLng: LatLng) {
         val location = latLng.latitude.toString() + "," + latLng.longitude.toString()
         disposable.add(apiInterface.getAllGasStations(
-            location, FirebaseAuth.getInstance().currentUser!!.uid
+            location
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

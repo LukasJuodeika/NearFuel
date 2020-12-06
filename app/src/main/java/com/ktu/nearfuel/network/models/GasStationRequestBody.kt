@@ -16,8 +16,9 @@ class GasStationRequestBody(
     val station_id: Int?,
     val title: String?,
     val updated_at: String?,
-    val user_id: Int?,
-    val uid: String
+    val user_id: Int?
+//    ,
+//    val uid: String
 ) {
 
 }

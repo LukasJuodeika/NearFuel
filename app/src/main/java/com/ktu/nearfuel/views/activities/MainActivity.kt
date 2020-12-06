@@ -11,13 +11,13 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.ktu.components.contracts.MainContract
-import com.ktu.components.presenters.MainPresenter
+import com.ktu.nearfuel.MainPresenter
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.login.views.AuthenticationActivity
 import com.ktu.nearfuel.maps.contracts.MapsNewContract
 import com.ktu.nearfuel.maps.views.MainMVPView
+import com.ktu.nearfuel.network.AuthRepository
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -30,13 +30,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var navController: NavController
     private lateinit var presenter: MainContract.Presenter
-    private lateinit var mAuth: FirebaseAuth
 
     @Inject
     internal lateinit var presenter1: MapsNewContract<MainMVPView>
 
     @Inject
     internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    internal lateinit var authRepository: AuthRepository
 
 
     override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
@@ -46,8 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mAuth = FirebaseAuth.getInstance()
-        presenter = MainPresenter(this, mAuth)
+        presenter = MainPresenter(this, authRepository)
         presenter.onCreate()
         setupNavigation()
     }

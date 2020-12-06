@@ -101,7 +101,7 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    internal fun getAuthInterceptor(authRepository: AuthRepository): AuthInterceptor {
-        return AuthInterceptor(authRepository)
+    internal fun getAuthInterceptor(application: Application, authRepository: AuthRepository): AuthInterceptor {
+        return AuthInterceptor(authRepository, application)
     }
 }

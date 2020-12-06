@@ -22,11 +22,8 @@ interface APIInterface {
         @Query("key") key: String
     ): Observable<NearestGasStationsJsonResponse>
 
-    @GET("stations")
-    fun getAllGasStations(
-        @Query("location") location: String,
-        @Query("uid") uid: String
-    ): Observable<GasStationResponse>
+    @GET("api/station")
+    fun getAllGasStations(): Observable<GasStationResponse>
 
     @PUT("station")
     fun updateStation(
