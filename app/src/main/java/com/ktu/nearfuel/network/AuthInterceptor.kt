@@ -36,9 +36,13 @@ class AuthInterceptor(
     }
 
     private fun withAuthHeader(builder: Request.Builder): Request.Builder {
-        return builder.header(
-            HEADER_AUTHORIZATION,
-            String.format("Bearer %s", authRepository.getAccessToken())
-        )
+        val token = authRepository.getAccessToken()
+        return if (token.isNotEmpty())
+            builder.header(
+                HEADER_AUTHORIZATION,
+                String.format("Bearer %s", authRepository.getAccessToken())
+            )
+        else
+            builder
     }
 }

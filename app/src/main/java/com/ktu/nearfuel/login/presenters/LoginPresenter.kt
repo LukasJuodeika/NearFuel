@@ -12,12 +12,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Named
 
 class LoginPresenter @Inject constructor(
     private val view: LoginContract.View,
     private val schedulersFacade: SchedulersFacade,
     val authRepository: AuthRepository,
-    val apiInterface: APIInterface
+    @Named("unauthorized") val apiInterface: APIInterface
 ) :
     LoginContract.Presenter {
 

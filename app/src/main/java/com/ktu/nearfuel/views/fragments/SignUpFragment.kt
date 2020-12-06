@@ -12,6 +12,7 @@ import com.ktu.components.contracts.SignUpContract
 import com.ktu.nearfuel.login.presenters.SignUpPresenter
 import com.ktu.nearfuel.R
 import com.ktu.nearfuel.network.APIInterface
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_signup.view.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -36,6 +37,11 @@ class SignUpFragment : Fragment(), SignUpContract.View {
         mNavigation = findNavController()
         setClickListeners(view)
         return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AndroidSupportInjection.inject(this)
     }
 
     private fun setClickListeners(view: View) {

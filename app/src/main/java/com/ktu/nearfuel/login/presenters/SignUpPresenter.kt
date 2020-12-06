@@ -3,7 +3,9 @@ package com.ktu.nearfuel.login.presenters
 import com.ktu.components.contracts.SignUpContract
 import com.ktu.nearfuel.network.APIInterface
 import com.ktu.nearfuel.network.models.RegistrationRequestBody
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class SignUpPresenter(val view: SignUpContract.View, val apiInterface: APIInterface) : SignUpContract.Presenter {
 
@@ -25,7 +27,10 @@ class SignUpPresenter(val view: SignUpContract.View, val apiInterface: APIInterf
         compositeDisposable.add(
             apiInterface.register(
                 RegistrationRequestBody(email, password)
-            ).subscribe({
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
                 view.navigateToLogin()
             }, { exception ->
                 val errorCode: String
