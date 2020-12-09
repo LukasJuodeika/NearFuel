@@ -1,12 +1,9 @@
 package com.ktu.nearfuel.network
 
 import com.ktu.components.objects.GasStation
-import com.ktu.components.objects.NearestGasStation.NearestGasStationsJsonResponse
-import com.ktu.nearfuel.network.models.GasStationRequestBody
 import com.ktu.nearfuel.network.models.LoginResponse
 import com.ktu.nearfuel.network.models.RegistrationRequestBody
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -15,8 +12,11 @@ interface APIInterface {
     @GET("api/station")
     fun getAllGasStations(): Single<List<GasStation>>
 
-    @PUT("api/station")
-    fun updateStation(@Body gasStationRequest: GasStationRequestBody): Observable<GasStation>
+    @PUT("api/station/{id}")
+    fun updateStation(@Path("id") stationId: Int, @Body gasStation: GasStation): Completable
+
+    @POST("api/station/{stationId}/price")
+    fun addPrice(@Path("stationId") stationId: Int, @Body price: Price): Completable
 
     @POST("oauth/token")
     @FormUrlEncoded
