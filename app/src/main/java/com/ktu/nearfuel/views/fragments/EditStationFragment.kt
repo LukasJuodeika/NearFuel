@@ -91,6 +91,8 @@ class EditStationFragment : Fragment(), EditStationContract.View {
                 if (chip_petrol.isChecked) station.fuel_price = edit_petrol.text.toString()
                 if (chip_gas.isChecked) station.gas_price = edit_gas.text.toString()
                 if (chip_diesel.isChecked) station.diesel_price = edit_diesel.text.toString()
+                station.address = ti_address.editText?.text.toString()
+                station.title = ti_title.editText?.text.toString()
                 dagger2Presenter.updateGasStation(station)
             }
             Log.d("response", arguments!!.getParcelable<GasStation>("amount").toString())

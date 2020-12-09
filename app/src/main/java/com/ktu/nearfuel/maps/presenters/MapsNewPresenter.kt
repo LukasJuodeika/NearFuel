@@ -30,26 +30,14 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
 
     val updategasStationLivedata = MutableLiveData<Resource<GasStation>>()
 
-    @SuppressLint("NewApi")
     override fun updateGasStation(gasStation: GasStation) {
         updategasStationLivedata.value = Resource.loading(null)
         disposable.add(
-            apiInterface.updateStation(gasStation.id, gasStation)
-                .andThen {
-                    apiInterface.addPrice(
-                        gasStation.id,
-                        Price(
-                            dateTime = LocalDateTime.now().toString(),
-                            gasPrice = gasStation.gas_price ?: "",
-                            fuelPrice = gasStation.fuel_price ?: "",
-                            dieselPrice = gasStation.diesel_price ?: ""
-                        )
-                    ).subscribe(it)
-                }
-                .doOnComplete { gasStationDao.insertGasStation(gasStation) }
+            addOrUpdateStation(gasStation)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+
                     updategasStationLivedata.value = Resource.success(gasStation)
                     Log.d("responseerror", "updated")
                 },
@@ -59,6 +47,48 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
 
                     }
                 ))
+    }
+
+
+    private fun addOrUpdateStation(station: GasStation): Completable {
+        return if(station.id > 0) {
+            updateStation(station)
+        } else {
+            addStation(station)
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private fun updateStation(gasStation: GasStation): Completable {
+        return apiInterface.updateStation(gasStation.id, gasStation)
+            .andThen {
+                apiInterface.addPrice(
+                    gasStation.id,
+                    Price(
+                        dateTime = LocalDateTime.now().toString(),
+                        gasPrice = gasStation.gas_price ?: "",
+                        fuelPrice = gasStation.fuel_price ?: "",
+                        dieselPrice = gasStation.diesel_price ?: ""
+                    )
+                ).subscribe(it)
+            }
+            .doOnComplete { gasStationDao.insertGasStation(gasStation) }
+    }
+
+    @SuppressLint("NewApi")
+    private fun addStation(gasStation: GasStation): Completable {
+        return apiInterface.addStation(gasStation)
+            .flatMapCompletable {station ->
+                apiInterface.addPrice(
+                    station.id,
+                    Price(
+                        dateTime = LocalDateTime.now().toString(),
+                        gasPrice = gasStation.gas_price ?: "",
+                        fuelPrice = gasStation.fuel_price ?: "",
+                        dieselPrice = gasStation.diesel_price ?: ""
+                    )
+                ).andThen { gasStationDao.insertGasStation(station) }
+            }
     }
 
     override fun getGasStationsLivedata(): MutableLiveData<List<GasStation>> {

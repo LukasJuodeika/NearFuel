@@ -14,25 +14,25 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.ktu.components.contracts.MapContract
-import com.ktu.components.presenters.MapPresenter
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.map_fragment.view.*
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.model.LatLng
-import com.ktu.components.objects.GasStation
-import com.ktu.nearfuel.maps.contracts.MapsNewContract
-import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
-import javax.inject.Named
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.ktu.components.contracts.MapContract
+import com.ktu.components.objects.GasStation
+import com.ktu.components.presenters.MapPresenter
 import com.ktu.nearfuel.R
+import com.ktu.nearfuel.maps.contracts.MapsNewContract
 import com.ktu.nearfuel.views.StationInfoWindowAdapter
+import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDateTime
+import javax.inject.Inject
+import javax.inject.Named
 
 
 class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback {
@@ -147,10 +147,30 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback {
     }
 
 
+    @SuppressLint("NewApi")
     override fun onMapReady(mMap: GoogleMap) {
         this.mMap = mMap
         presenter.onMapReady()
         observeMarkersByGoogleLocation()
+        mMap.setOnMapLongClickListener {
+            openAddStationFragment(
+                GasStation(
+                    address = "",
+                    created_at = LocalDateTime.now().toString(),
+                    diesel_price = null,
+                    fuelType = null,
+                    fuel_price = null,
+                    gas_price = null,
+                    lat = it.latitude.toString(),
+                    lng = it.longitude.toString(),
+                    id = -1,
+                    title = "",
+                    updated_at = null,
+                    user_id = null
+                )
+            )
+            Log.d(this.javaClass.simpleName, "lat: ${it}")
+        }
 
     }
 

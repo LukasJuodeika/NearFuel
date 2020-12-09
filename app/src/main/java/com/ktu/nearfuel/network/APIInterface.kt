@@ -15,6 +15,9 @@ interface APIInterface {
     @PUT("api/station/{id}")
     fun updateStation(@Path("id") stationId: Int, @Body gasStation: GasStation): Completable
 
+    @POST("api/station")
+    fun addStation(@Body gasStation: GasStation): Single<GasStation>
+
     @POST("api/station/{stationId}/price")
     fun addPrice(@Path("stationId") stationId: Int, @Body price: Price): Completable
 

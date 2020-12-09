@@ -19,7 +19,7 @@ data class GasStation(
     val lng: String,
     @PrimaryKey
     val id: Int,
-    val title: String?,
+    var title: String?,
     val updated_at: String?,
     val user_id: Int?
 ) : Parcelable {
