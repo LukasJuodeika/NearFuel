@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity
 data class GasStation(
@@ -17,7 +18,7 @@ data class GasStation(
     var lat: String,
     val lng: String,
     @PrimaryKey
-    val station_id: Int?,
+    val id: Int,
     val title: String?,
     val updated_at: String?,
     val user_id: Int?
@@ -31,7 +32,7 @@ data class GasStation(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as Int,
         parcel.readString(),
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int
@@ -47,7 +48,7 @@ data class GasStation(
         parcel.writeString(gas_price)
         parcel.writeString(lat)
         parcel.writeString(lng)
-        parcel.writeValue(station_id)
+        parcel.writeValue(id)
         parcel.writeString(title)
         parcel.writeString(updated_at)
         parcel.writeValue(user_id)
@@ -58,7 +59,7 @@ data class GasStation(
     }
 
     override fun toString(): String {
-        return "GasStation(address=$address, created_at=$created_at, diesel_price=$diesel_price, fuelType=$fuelType, fuel_price=$fuel_price, gas_price=$gas_price, lat='$lat', lng='$lng', station_id=$station_id, title=$title, updated_at=$updated_at, user_id=$user_id)"
+        return "GasStation(address=$address, created_at=$created_at, diesel_price=$diesel_price, fuelType=$fuelType, fuel_price=$fuel_price, gas_price=$gas_price, lat='$lat', lng='$lng', station_id=$id, title=$title, updated_at=$updated_at, user_id=$user_id)"
     }
 
     companion object CREATOR : Parcelable.Creator<GasStation> {

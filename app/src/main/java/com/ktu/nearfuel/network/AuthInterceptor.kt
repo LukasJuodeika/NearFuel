@@ -25,7 +25,7 @@ class AuthInterceptor(
             response.close()
             authRepository.setAccessToken("")
             val intent = Intent(context, AuthenticationActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
             response
 //            if (tokenManager.refreshAccessToken()) {
