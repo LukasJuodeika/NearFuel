@@ -152,6 +152,24 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback {
         this.mMap = mMap
         presenter.onMapReady()
         observeMarkersByGoogleLocation()
+    }
+
+    @SuppressLint("MissingPermission", "NewApi")
+    override fun setMapSettings() {
+        mMap.uiSettings.isMyLocationButtonEnabled = true
+        mMap.isMyLocationEnabled = true
+        mMap.setOnCameraMoveListener { presenter.setFocus(true) }
+        mMap.setOnMyLocationButtonClickListener {
+            presenter.setFocus(false)
+            moveCamera(true)
+            true
+        }
+        mMap.setInfoWindowAdapter(StationInfoWindowAdapter(context!!.applicationContext))
+        mMap.setOnInfoWindowLongClickListener {
+            Log.d("testingTag", it.tag.toString())
+            var gasStation: GasStation = it.tag as GasStation;
+            openAddStationFragment(gasStation)
+        }
         mMap.setOnMapLongClickListener {
             openAddStationFragment(
                 GasStation(
@@ -170,25 +188,6 @@ class MapFragment : Fragment(), MapContract.View, OnMapReadyCallback {
                 )
             )
             Log.d(this.javaClass.simpleName, "lat: ${it}")
-        }
-
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun setMapSettings() {
-        mMap.uiSettings.isMyLocationButtonEnabled = true
-        mMap.isMyLocationEnabled = true
-        mMap.setOnCameraMoveListener { presenter.setFocus(true) }
-        mMap.setOnMyLocationButtonClickListener {
-            presenter.setFocus(false)
-            moveCamera(true)
-            true
-        }
-        mMap.setInfoWindowAdapter(StationInfoWindowAdapter(context!!.applicationContext))
-        mMap.setOnInfoWindowLongClickListener {
-            Log.d("testingTag", it.tag.toString())
-            var gasStation: GasStation = it.tag as GasStation;
-            openAddStationFragment(gasStation)
         }
     }
 

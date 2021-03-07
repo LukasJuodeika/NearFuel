@@ -87,7 +87,7 @@ class MapsNewPresenter<V : MainMVPView> @Inject constructor(
                         fuelPrice = gasStation.fuel_price ?: "",
                         dieselPrice = gasStation.diesel_price ?: ""
                     )
-                ).andThen { gasStationDao.insertGasStation(station) }
+                ).doOnComplete { gasStationDao.insertGasStation(station) }
             }
     }
 
